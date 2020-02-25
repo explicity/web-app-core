@@ -1,7 +1,10 @@
-import { Column, Entity, OneToMany, Index } from 'typeorm';
+import { Column, Entity, OneToMany, Index, ManyToMany } from 'typeorm';
 
 import { AbstractEntity } from '../abstract/AbstractEntity';
+
 import Article from './Article';
+import ArticleReaction from './ArticleReaction';
+import Newspaper from './Newspaper';
 
 @Entity('users')
 export default class User extends AbstractEntity {
@@ -26,4 +29,16 @@ export default class User extends AbstractEntity {
     article => article.author
   )
   article: Article[];
+
+  @ManyToMany(
+    () => Newspaper,
+    newspaper => newspaper.users
+  )
+  newspapers: Promise<Newspaper[]>;
+
+  @OneToMany(
+    () => ArticleReaction,
+    articleReaction => articleReaction.user
+  )
+  articleReaction: ArticleReaction[];
 }
