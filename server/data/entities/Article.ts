@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 import { AbstractEntity } from '../abstract/AbstractEntity';
-import { Genre } from '../../common/enums';
+import { GenreEnum } from '../../common/enums';
 
 import Newspaper from './Newspaper';
 import User from './User';
@@ -35,9 +35,9 @@ export default class Article extends AbstractEntity {
 
   @Column({
     type: 'enum',
-    enum: Genre
+    enum: GenreEnum
   })
-  genre: Genre;
+  genre: GenreEnum;
 
   @Column('text', { nullable: true })
   imageLink: string;
@@ -65,7 +65,7 @@ export default class Article extends AbstractEntity {
     tag => tag.articles
   )
   @JoinTable({
-    name: 'tags_to_article'
+    name: 'tags_to_articles'
   })
   tags: Promise<Tag[]>;
 
