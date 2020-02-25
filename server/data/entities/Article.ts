@@ -31,7 +31,7 @@ export default class Article extends AbstractEntity {
   body: string;
 
   @Column('date')
-  publication_date: Date;
+  publicationDate: Date;
 
   @Column({
     type: 'enum',

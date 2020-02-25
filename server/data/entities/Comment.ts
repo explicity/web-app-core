@@ -15,10 +15,10 @@ import User from './User';
 export default class Comment extends AbstractEntity {
   @Index({ unique: true })
   @Column()
-  article_id: string;
+  articleId: string;
 
   @Column()
-  user_id: string;
+  userId: string;
 
   @Column('text', { nullable: false })
   body: string;
@@ -29,7 +29,7 @@ export default class Comment extends AbstractEntity {
     { cascade: true }
   )
   @JoinColumn({
-    name: 'article_id'
+    name: 'articleId'
   })
   article: Article;
 
@@ -39,7 +39,7 @@ export default class Comment extends AbstractEntity {
     { cascade: true }
   )
   @JoinColumn({
-    name: 'user_id'
+    name: 'userId'
   })
   user: User;
 }

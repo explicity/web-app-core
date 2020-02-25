@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  Index,
-  ManyToOne,
-  Unique,
-  JoinColumn
-} from 'typeorm';
+import { Column, Entity, Index, ManyToOne, Unique, JoinColumn } from 'typeorm';
 
 import { AbstractEntity } from '../abstract/AbstractEntity';
 
@@ -13,17 +6,17 @@ import Article from './Article';
 import User from './User';
 
 @Entity('article_reactions')
-@Unique(['user_id', 'article_id'])
+@Unique(['userId', 'articleId'])
 export default class ArticleReaction extends AbstractEntity {
   @Index({ unique: true })
   @Column('boolean', { default: false, nullable: false })
   isLiked: boolean;
 
   @Column()
-  article_id: string;
+  articleId: string;
 
   @Column()
-  user_id: string;
+  userId: string;
 
   @ManyToOne(
     () => Article,
@@ -31,7 +24,7 @@ export default class ArticleReaction extends AbstractEntity {
     { cascade: true }
   )
   @JoinColumn({
-    name: 'article_id'
+    name: 'articleId'
   })
   article: Article;
 
@@ -41,7 +34,7 @@ export default class ArticleReaction extends AbstractEntity {
     { cascade: true }
   )
   @JoinColumn({
-    name: 'user_id'
+    name: 'userId'
   })
   user: User;
 }

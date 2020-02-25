@@ -1,19 +1,28 @@
-import { Column, Entity, OneToMany, Index, ManyToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  Index,
+  ManyToMany,
+  OneToOne,
+  JoinColumn
+} from 'typeorm';
 
 import { AbstractEntity } from '../abstract/AbstractEntity';
 
 import Article from './Article';
 import ArticleReaction from './ArticleReaction';
 import Newspaper from './Newspaper';
+import Role from './Role';
 
 @Entity('users')
 export default class User extends AbstractEntity {
   @Index({ unique: true })
   @Column('text')
-  first_name: string;
+  firstName: string;
 
   @Column('text')
-  last_name: string;
+  lastName: string;
 
   @Column('text')
   login: string;
@@ -41,4 +50,8 @@ export default class User extends AbstractEntity {
     articleReaction => articleReaction.user
   )
   articleReaction: ArticleReaction[];
+
+  @OneToOne(() => Role)
+  @JoinColumn()
+  role: Role;
 }
