@@ -13,7 +13,7 @@ export default class Permission extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('text', { nullable: false })
+  @Column('text', { nullable: false, unique: true })
   name: string;
 
   @ManyToMany(

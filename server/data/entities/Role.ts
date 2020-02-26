@@ -10,6 +10,7 @@ import {
 import { RoleEnum } from '../../common/enums';
 
 import Permission from './Permission';
+import User from './User';
 
 @Entity('roles')
 export default class Role extends BaseEntity {
@@ -21,7 +22,8 @@ export default class Role extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: RoleEnum
+    enum: RoleEnum,
+    default: RoleEnum.guest
   })
   role: RoleEnum;
 
@@ -33,4 +35,10 @@ export default class Role extends BaseEntity {
     name: 'permissions_to_roles'
   })
   permissions: Promise<Permission[]>;
+
+  @ManyToMany(
+    () => User,
+    user => user.roles
+  )
+  users: Promise<User[]>;
 }

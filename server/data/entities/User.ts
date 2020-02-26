@@ -4,8 +4,7 @@ import {
   OneToMany,
   Index,
   ManyToMany,
-  OneToOne,
-  JoinColumn
+  JoinTable
 } from 'typeorm';
 
 import { AbstractEntity } from '../abstract/AbstractEntity';
@@ -24,7 +23,7 @@ export default class User extends AbstractEntity {
   @Column('text')
   lastName: string;
 
-  @Column('text')
+  @Column('text', { unique: true })
   login: string;
 
   @Column('text')
@@ -35,23 +34,32 @@ export default class User extends AbstractEntity {
 
   @OneToMany(
     () => Article,
-    article => article.author
+    article => article.author,
+    { nullable: true }
   )
-  article: Article[];
+  articles: Article[];
 
   @ManyToMany(
     () => Newspaper,
-    newspaper => newspaper.users
+    newspaper => newspaper.users,
+    { nullable: true }
   )
   newspapers: Promise<Newspaper[]>;
 
   @OneToMany(
     () => ArticleReaction,
-    articleReaction => articleReaction.user
+    articleReaction => articleReaction.user,
+    { nullable: true }
   )
   articleReaction: ArticleReaction[];
 
-  @OneToOne(() => Role)
-  @JoinColumn()
-  role: Role;
+  @ManyToMany(
+    () => Role,
+    role => role.users,
+    { nullable: false }
+  )
+  @JoinTable({
+    name: 'roles_to_users'
+  })
+  roles: Promise<Role[]>;
 }

@@ -6,6 +6,7 @@ import {
   OneToOne,
   ManyToMany,
   JoinTable,
+  JoinColumn,
   OneToMany
 } from 'typeorm';
 
@@ -44,7 +45,7 @@ export default class Article extends AbstractEntity {
 
   @ManyToOne(
     () => User,
-    user => user.article
+    user => user.articles
   )
   author: User;
 
@@ -52,6 +53,7 @@ export default class Article extends AbstractEntity {
     () => Annotation,
     annotation => annotation.article
   )
+  @JoinColumn()
   annotation: Annotation;
 
   @ManyToOne(
