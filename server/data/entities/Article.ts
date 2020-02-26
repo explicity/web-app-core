@@ -58,7 +58,8 @@ export default class Article extends AbstractEntity {
 
   @ManyToOne(
     () => Newspaper,
-    newspaper => newspaper.articles
+    newspaper => newspaper.articles,
+    { nullable: false }
   )
   newspaper: Newspaper;
 
@@ -73,7 +74,8 @@ export default class Article extends AbstractEntity {
 
   @OneToMany(
     () => ArticleReaction,
-    articleReaction => articleReaction.article
+    articleReaction => articleReaction.article,
+    { nullable: true }
   )
   articleReaction: ArticleReaction[];
 }

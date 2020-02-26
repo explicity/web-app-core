@@ -1,4 +1,4 @@
-import { Column, Entity, Index, ManyToMany } from 'typeorm';
+import { Column, Entity, Index, ManyToMany, ManyToOne } from 'typeorm';
 
 import { AbstractEntity } from '../abstract/AbstractEntity';
 
@@ -15,4 +15,11 @@ export default class Tag extends AbstractEntity {
     article => article.tags
   )
   articles: Promise<Article[]>;
+
+  @ManyToOne(
+    () => Tag,
+    tag => tag
+  )
+  @Column({ type: 'uuid', nullable: true, name: 'parentId' })
+  parent: Tag;
 }

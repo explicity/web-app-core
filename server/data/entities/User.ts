@@ -29,6 +29,9 @@ export default class User extends AbstractEntity {
   @Column('text')
   email: string;
 
+  @Column('boolean', { default: false })
+  emailConfirmed: boolean;
+
   @Column('text')
   password: string;
 
@@ -49,7 +52,7 @@ export default class User extends AbstractEntity {
   @OneToMany(
     () => ArticleReaction,
     articleReaction => articleReaction.user,
-    { nullable: true }
+    { nullable: true, cascade: true }
   )
   articleReaction: ArticleReaction[];
 
