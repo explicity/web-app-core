@@ -20,8 +20,7 @@ export default class ArticleReaction extends AbstractEntity {
 
   @ManyToOne(
     () => Article,
-    article => article.articleReaction,
-    { cascade: true }
+    article => article.articleReaction
   )
   @JoinColumn({
     name: 'articleId'
@@ -31,7 +30,6 @@ export default class ArticleReaction extends AbstractEntity {
   @ManyToOne(
     () => User,
     user => user.articleReaction,
-    { cascade: true }
   )
   @JoinColumn({
     name: 'userId'

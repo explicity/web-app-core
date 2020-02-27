@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/explicity/web-app-core#readme",
   "dependencies": {
+    "bcrypt": "^4.0.0",
     "body-parser": "^1.19.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
@@ -33,9 +34,12 @@
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.8.1-alpha.2",
     "typedi": "^0.8.0",
-    "typeorm": "^0.2.22"
+    "typeorm": "^0.2.22",
+    "uuid": "^7.0.1"
   },
   "devDependencies": {
+    "@types/uuid": "^7.0.0",
+    "@types/bcrypt": "^3.0.0",
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.6",
     "@types/dotenv": "^8.2.0",

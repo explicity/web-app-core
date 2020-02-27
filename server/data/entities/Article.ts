@@ -40,18 +40,20 @@ export default class Article extends AbstractEntity {
   })
   genre: GenreEnum;
 
-  @Column('text', { nullable: true })
+  @Column('text', { nullable: true, default: null })
   imageLink: string;
 
   @ManyToOne(
     () => User,
-    user => user.articles
+    user => user.articles,
+    { nullable: false }
   )
   author: User;
 
   @OneToOne(
     () => Annotation,
-    annotation => annotation.article
+    annotation => annotation.article,
+    { cascade: true }
   )
   @JoinColumn()
   annotation: Annotation;

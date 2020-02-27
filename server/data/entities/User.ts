@@ -45,7 +45,7 @@ export default class User extends AbstractEntity {
   @ManyToMany(
     () => Newspaper,
     newspaper => newspaper.users,
-    { nullable: true }
+    { nullable: true, lazy: true }
   )
   newspapers: Promise<Newspaper[]>;
 
@@ -59,7 +59,7 @@ export default class User extends AbstractEntity {
   @ManyToMany(
     () => Role,
     role => role.users,
-    { nullable: false }
+    { nullable: false, lazy: true }
   )
   @JoinTable({
     name: 'roles_to_users'
