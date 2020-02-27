@@ -10,9 +10,7 @@ export class NewspapersSeeder {
     newspapers.forEach(async ({ articles, ...data }) => {
       const newspaper = Object.assign(new Newspaper(), data);
 
-      const usersEntity = users.map(user => {
-        return Object.assign(new User(), user);
-      });
+      const usersEntity = users.map(user => Object.assign(new User(), user));
 
       newspaper.users = Promise.resolve(usersEntity);
       await newspaper.save();

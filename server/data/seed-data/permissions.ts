@@ -3,12 +3,15 @@ import Permission from '../entities/Permission';
 export const permissions = [
   {
     id: 'b9928e3c-ed53-41af-862b-3e0ba89cc6e0',
-    name: 'can_delete_newspaper',
-    roles: 'admin'
+    name: 'can_delete_newspaper'
   },
   {
     id: 'e78bbdc5-c90d-459d-8289-5f522a1f1b0b',
     name: 'can_update_newspaper'
+  },
+  {
+    id: '11812091-fb04-404d-a510-bc413cf5fd03',
+    name: 'can_add_newspaper'
   },
   {
     id: 'baab891a-ea0c-438e-8cf3-2c153ae9eda3',
