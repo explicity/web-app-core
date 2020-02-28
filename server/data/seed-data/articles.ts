@@ -15,7 +15,16 @@ export const articles = [
       'The first article in the first newspaper is finally published. Enjoy!',
     publicationDate: now,
     genre: GenreEnum.school,
-    author: users[0],
+    author: users[1],
     annotation: annotations[0]
+  },
+  {
+    id: '6d7058a7-1d8e-40ae-a3cb-21b3f06e0ac6',
+    title: 'Getting started!',
+    body: 'Is there gonna be lots of articles? Who knows...',
+    publicationDate: now,
+    genre: GenreEnum.beauty,
+    author: users[2],
+    annotation: annotations[1]
   }
 ] as Article[];

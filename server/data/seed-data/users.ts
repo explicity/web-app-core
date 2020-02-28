@@ -23,6 +23,14 @@ export const users = [
   },
   {
     id: 'f2ad2e70-3b73-4d8c-a6e8-d36a1f1f38ec',
+    firstName: 'John',
+    lastName: 'Doe',
+    login: 'johndoe',
+    email: 'johndoe@gmail.com',
+    password: hash('johndoe')
+  },
+  {
+    id: '1dd7c883-aee5-4659-8d1d-3c72b4793786',
     firstName: 'Guest',
     lastName: 'Guest',
     login: 'Guest',
