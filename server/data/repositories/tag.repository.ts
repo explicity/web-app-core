@@ -25,4 +25,12 @@ export default class TagRepository extends BaseRepository<Tag> {
       })
       .getMany();
   }
+
+  getByKeyword({ keyword }: { keyword: string }) {
+    return this.findOne({
+      where: {
+        keyword
+      }
+    });
+  }
 }
