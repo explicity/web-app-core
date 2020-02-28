@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class initTables1582764739126 implements MigrationInterface {
-    name = 'initTables1582764739126'
+export class initTables1582845246430 implements MigrationInterface {
+    name = 'initTables1582845246430'
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query(`CREATE TABLE "article_reactions" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "isLiked" boolean NOT NULL DEFAULT false, "articleId" uuid NOT NULL, "userId" uuid NOT NULL, CONSTRAINT "UQ_c73d1aec06b48d4de2f99425cf1" UNIQUE ("userId", "articleId"), CONSTRAINT "PK_1e233223c5b3ca86885a69cfbd9" PRIMARY KEY ("id"))`, undefined);
@@ -18,7 +18,7 @@ export class initTables1582764739126 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "tags" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "keyword" text NOT NULL, "parentId" uuid, CONSTRAINT "PK_e7dc17249a1148a1970748eda99" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_bbde41d42d0cbda1fd4eb24420" ON "tags" ("keyword") `, undefined);
         await queryRunner.query(`CREATE TYPE "articles_genre_enum" AS ENUM('Beauty', 'School', 'Science')`, undefined);
-        await queryRunner.query(`CREATE TABLE "articles" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "title" text NOT NULL, "subtitle" text, "body" text NOT NULL, "publicationDate" date NOT NULL, "genre" "articles_genre_enum" NOT NULL, "imageLink" text, "authorId" uuid, "annotationId" uuid, "newspaperId" uuid NOT NULL, CONSTRAINT "REL_4d62ac02c687dd8b275155102f" UNIQUE ("annotationId"), CONSTRAINT "PK_0a6e2c450d83e0b6052c2793334" PRIMARY KEY ("id"))`, undefined);
+        await queryRunner.query(`CREATE TABLE "articles" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "title" text NOT NULL, "subtitle" text, "body" text NOT NULL, "publicationDate" date NOT NULL, "genre" "articles_genre_enum" NOT NULL, "imageLink" text DEFAULT null, "authorId" uuid NOT NULL, "annotationId" uuid, "newspaperId" uuid NOT NULL, CONSTRAINT "REL_4d62ac02c687dd8b275155102f" UNIQUE ("annotationId"), CONSTRAINT "PK_0a6e2c450d83e0b6052c2793334" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_3c28437db9b5137136e1f6d609" ON "articles" ("title") `, undefined);
         await queryRunner.query(`CREATE TABLE "annotations" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "title" text NOT NULL, "body" text, CONSTRAINT "PK_d5b59b40ef7ee54b4309c2e89b2" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_2107b249bdb54f4314267a9bd7" ON "annotations" ("title") `, undefined);
