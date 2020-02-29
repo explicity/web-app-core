@@ -1,10 +1,10 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class initTables1582845246430 implements MigrationInterface {
-    name = 'initTables1582845246430'
+export class initTables1582936166816 implements MigrationInterface {
+    name = 'initTables1582936166816'
 
     public async up(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.query(`CREATE TABLE "article_reactions" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "isLiked" boolean NOT NULL DEFAULT false, "articleId" uuid NOT NULL, "userId" uuid NOT NULL, CONSTRAINT "UQ_c73d1aec06b48d4de2f99425cf1" UNIQUE ("userId", "articleId"), CONSTRAINT "PK_1e233223c5b3ca86885a69cfbd9" PRIMARY KEY ("id"))`, undefined);
+        await queryRunner.query(`CREATE TABLE "article_reactions" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "isLiked" boolean NOT NULL DEFAULT true, "articleId" uuid NOT NULL, "userId" uuid NOT NULL, CONSTRAINT "UQ_c73d1aec06b48d4de2f99425cf1" UNIQUE ("userId", "articleId"), CONSTRAINT "PK_1e233223c5b3ca86885a69cfbd9" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_62817c7227130f4398f8f668d0" ON "article_reactions" ("isLiked") `, undefined);
         await queryRunner.query(`CREATE TABLE "permissions" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "name" text NOT NULL, CONSTRAINT "UQ_48ce552495d14eae9b187bb6716" UNIQUE ("name"), CONSTRAINT "PK_920331560282b8bd21bb02290df" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_48ce552495d14eae9b187bb671" ON "permissions" ("name") `, undefined);
