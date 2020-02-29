@@ -21,7 +21,8 @@ export default class Role extends AbstractEntity {
 
   @ManyToMany(
     () => Permission,
-    permission => permission.roles
+    permission => permission.roles,
+    { nullable: true }
   )
   @JoinTable({
     name: 'permissions_to_roles'

@@ -9,7 +9,7 @@ import User from './User';
 @Unique(['userId', 'articleId'])
 export default class ArticleReaction extends AbstractEntity {
   @Index({ unique: true })
-  @Column('boolean', { default: false, nullable: false })
+  @Column('boolean', { default: true })
   isLiked: boolean;
 
   @Column()

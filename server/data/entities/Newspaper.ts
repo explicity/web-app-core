@@ -20,13 +20,15 @@ export default class Newspaper extends AbstractEntity {
 
   @OneToMany(
     () => Article,
-    article => article.newspaper
+    article => article.newspaper,
+    { nullable: true }
   )
   articles: Article[];
 
   @ManyToMany(
     () => User,
-    user => user.newspapers
+    user => user.newspapers,
+    { nullable: true }
   )
   @JoinTable({
     name: 'users_to_newspapers'

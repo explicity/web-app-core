@@ -67,7 +67,8 @@ export default class Article extends AbstractEntity {
 
   @ManyToMany(
     () => Tag,
-    tag => tag.articles
+    tag => tag.articles,
+    { nullable: true }
   )
   @JoinTable({
     name: 'tags_to_articles'
