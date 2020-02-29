@@ -8,7 +8,7 @@ class ArticlesGridView extends React.Component<
   IArticlesGridState
 > {
   render() {
-    return <div>oh</div>;
+    return <div></div>;
   }
 }
 

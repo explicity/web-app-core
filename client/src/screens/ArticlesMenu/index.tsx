@@ -10,11 +10,7 @@ class ArticlesMenu extends React.Component<
   IArticlesMenuState
 > {
   render() {
-    return (
-      <div>
-        <ArticlesGridView />
-      </div>
-    );
+    return <ArticlesGridView />;
   }
 }
 

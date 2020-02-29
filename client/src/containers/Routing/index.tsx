@@ -9,6 +9,7 @@ const Routing: React.FunctionComponent<IRoutingProps> = () => {
   return (
     <div>
       <Switch>
+        <Route path='/articles' component={ArticlesMenu} />
         <Route path='/*' component={ArticlesMenu}>
           <Redirect to='/articles' />
         </Route>
