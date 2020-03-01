@@ -1,3 +1,5 @@
 import { combineReducers } from 'redux';
 
-export default combineReducers({});
+import article from 'screens/Articles/reducers';
+
+export default combineReducers({ article });
