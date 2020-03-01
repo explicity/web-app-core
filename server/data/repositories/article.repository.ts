@@ -10,4 +10,12 @@ export default class ArticleRepository extends BaseRepository<Article> {
       relations: ['tags']
     });
   }
+
+  getAuthorByUserId(id: string) {
+    return this.createQueryBuilder('articles')
+      .leftJoin('okrs.user', 'user')
+      .where('okrs."userId" = :id', { id })
+      .andWhere('okrs.deletedAt is NULL')
+      .getOne();
+  }
 }
