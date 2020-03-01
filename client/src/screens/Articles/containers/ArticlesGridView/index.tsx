@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { fetchArticles } from '../../routines';
 
 export interface IArticlesGridProps {}
 interface IArticlesGridState {}
@@ -12,4 +15,8 @@ class ArticlesGridView extends React.Component<
   }
 }
 
-export default ArticlesGridView;
+const mapDispatchToProps = {
+  fetchArticles
+};
+
+export default connect(null, mapDispatchToProps)(ArticlesGridView);
