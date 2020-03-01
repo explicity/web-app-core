@@ -12,7 +12,7 @@ export default class UserRepository extends BaseRepository<User> {
         'users.firstName',
         'users.lastName',
         'users.login',
-        'users.email '
+        'users.email'
       ])
       .getMany();
   }
