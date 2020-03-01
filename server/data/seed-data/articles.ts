@@ -4,6 +4,7 @@ import Article from '../entities/Article';
 
 import { users } from './users';
 import { annotations } from './annotations';
+import { newspapers } from './newspapers';
 
 const now = new Date();
 
@@ -16,7 +17,8 @@ export const articles = [
     publicationDate: now,
     genre: GenreEnum.school,
     author: users[1],
-    annotation: annotations[0]
+    annotation: annotations[0],
+    newspaper: newspapers[0]
   },
   {
     id: '6d7058a7-1d8e-40ae-a3cb-21b3f06e0ac6',
@@ -25,6 +27,7 @@ export const articles = [
     publicationDate: now,
     genre: GenreEnum.beauty,
     author: users[2],
-    annotation: annotations[1]
+    annotation: annotations[1],
+    newspaper: newspapers[0]
   }
 ] as Article[];
