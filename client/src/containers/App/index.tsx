@@ -1,16 +1,18 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 
 import Routing from 'containers/Routing';
 import { history } from 'helpers/history.helper';
+import { store } from 'store';
 
 function App() {
   return (
-    <div className='App'>
+    <Provider store={store}>
       <Router history={history}>
         <Routing />
       </Router>
-    </div>
+    </Provider>
   );
 }
 

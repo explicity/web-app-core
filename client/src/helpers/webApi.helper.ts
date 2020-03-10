@@ -2,7 +2,9 @@ import * as queryString from 'query-string';
 import { IFetchArgs, IFetchArgsData } from 'models/fetch';
 
 function getFetchUrl({ endpoint, queryParams }: IFetchArgsData) {
-  return `${endpoint}${
+  return `http://${process.env.REACT_APP_API_HOST}:${
+    process.env.REACT_APP_API_PORT
+  }/api${endpoint}${
     queryParams ? `?${queryString.stringify(queryParams)}` : ''
   }`;
 }
