@@ -9,10 +9,14 @@ import { fetchArticles } from '../../routines';
 function* fetchArticlesRequest() {
   try {
     const response = yield call(articleService.getArticles);
-    // console.log('response', normalize(response, schema.arrayOfArticles));
-    yield put(fetchArticles.success(response));
+
+    yield put(
+      fetchArticles.success({
+        response: normalize(response, schema.arrayOfArticles)
+      })
+    );
   } catch (error) {
-    yield put(fetchArticles.failure(error.message));
+    yield put(fetchArticles.failure(error.message || 'Something went wrong!'));
   }
 }
 
