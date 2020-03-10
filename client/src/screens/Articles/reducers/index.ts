@@ -6,7 +6,7 @@ import articles from '../containers/ArticlesGridView/reducer';
 import { fetchArticles } from '../routines';
 
 const requests = combineReducers({
-  article: reducerCreator([fetchArticles.TRIGGER])
+  articles: reducerCreator([fetchArticles.TRIGGER])
 });
 
 export default combineReducers({ articles, requests });

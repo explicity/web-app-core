@@ -1,10 +1,10 @@
 import { Routine } from 'redux-saga-routines';
 import { combineReducers } from 'redux';
+import _ from 'lodash';
 
 import { fetchArticles } from '../../routines';
 
 const byId = (state = {}, action: Routine<any>) => {
-  console.log(action);
   switch (action.type) {
     case fetchArticles.SUCCESS:
       return {
@@ -19,7 +19,7 @@ const byId = (state = {}, action: Routine<any>) => {
 const allIds = (state = [], action: Routine<any>) => {
   switch (action.type) {
     case fetchArticles.SUCCESS:
-      return [...state, ...action.payload.response.result];
+      return _.uniq([...state, ...action.payload.response.result]);
     default:
       return state;
   }
