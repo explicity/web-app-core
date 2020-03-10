@@ -4,7 +4,12 @@ import _ from 'lodash';
 
 import { fetchArticles } from '../../routines';
 
-const byId = (state = {}, action: Routine<any>) => {
+type IArticlesState = {
+  byId: any,
+  allIds: string[]
+}
+
+const articlesById = (state = {}, action: Routine<any>) => {
   switch (action.type) {
     case fetchArticles.SUCCESS:
       return {
@@ -16,7 +21,7 @@ const byId = (state = {}, action: Routine<any>) => {
   }
 };
 
-const allIds = (state = [], action: Routine<any>) => {
+const allArticles = (state = [], action: Routine<any>) => {
   switch (action.type) {
     case fetchArticles.SUCCESS:
       return _.uniq([...state, ...action.payload.response.result]);
@@ -26,8 +31,11 @@ const allIds = (state = [], action: Routine<any>) => {
 };
 
 const articles = combineReducers({
-  byId,
-  allIds
+  byId: articlesById,
+  allIds: allArticles
 });
 
 export default articles;
+
+export const getAllArticles = (state: IArticlesState) => 
+  state.allIds.map((id: string) => state.byId[id]);

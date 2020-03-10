@@ -5,10 +5,11 @@ import * as schema from './shema';
 import * as articleService from '../../services/article.service';
 
 import { fetchArticles } from '../../routines';
+import { IArticle } from '../../models/article';
 
 function* fetchArticlesRequest() {
   try {
-    const response = yield call(articleService.getArticles);
+    const response: IArticle[] = yield call(articleService.getArticles);
 
     yield put(
       fetchArticles.success({
