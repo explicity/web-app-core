@@ -4,7 +4,7 @@ import { IArticle } from '../models/article';
 
 export const getArticles = async (): Promise<IArticle[]> => {
   const response = await callWebApi({
-    endpoint: `/api/articles`,
+    endpoint: `/articles`,
     type: 'GET'
   });
   return response.json();
