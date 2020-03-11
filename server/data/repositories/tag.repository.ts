@@ -6,7 +6,7 @@ import { ITagSearch } from '../../common/models/tag';
 
 @EntityRepository(Tag)
 export default class TagRepository extends BaseRepository<Tag> {
-  getByFilter({ from, count, keyword }: ITagSearch) {
+  async getByFilter({ from, count, keyword }: ITagSearch): Promise<Tag[]> {
     const tags = this.createQueryBuilder('tags')
       .select('tags.id')
       .addSelect('tags.keyword');
@@ -17,7 +17,7 @@ export default class TagRepository extends BaseRepository<Tag> {
       });
     }
 
-    return tags
+    return await tags
       .skip(from)
       .take(count)
       .orderBy({
@@ -26,8 +26,8 @@ export default class TagRepository extends BaseRepository<Tag> {
       .getMany();
   }
 
-  getByKeyword({ keyword }: { keyword: string }) {
-    return this.findOne({
+  async getByKeyword({ keyword }: { keyword: string }): Promise<Tag> {
+    return await this.findOne({
       where: {
         keyword
       }
