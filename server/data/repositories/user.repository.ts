@@ -5,7 +5,7 @@ import User from '../entities/User';
 
 @EntityRepository(User)
 export default class UserRepository extends BaseRepository<User> {
-  getAllUsers() {
+  getAllUsers(): Promise<User[]> {
     return this.createQueryBuilder('users')
       .select([
         'users.id',

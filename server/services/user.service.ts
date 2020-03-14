@@ -3,13 +3,14 @@ import { OrmRepository } from 'typeorm-typedi-extensions';
 
 import UserRepository from '../data/repositories/user.repository';
 import { IShortUser } from '../common/models/user';
+import User from '../data/entities/User';
 
 @Service()
 export default class UserService {
   constructor(@OrmRepository() private userRepository: UserRepository) {}
 
-  getAll() {
-    return this.userRepository.getAllUsers();
+  async getAll(): Promise<User[]> {
+    return await this.userRepository.getAllUsers();
   }
 
   save({ id, email, firstName, lastName, login }: IShortUser) {
@@ -22,7 +23,11 @@ export default class UserService {
     });
   }
 
-  deleteUser(id: string) {
-    return this.userRepository.deleteById(id);
+  async deleteUser(id: string) {
+    return await this.userRepository.deleteById(id);
+  }
+
+  async findById(id: string): Promise<User> {
+    return await this.userRepository.getById(id);
   }
 }
