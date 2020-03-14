@@ -26,7 +26,7 @@ export default class User extends AbstractEntity {
   @Column('text', { unique: true })
   login: string;
 
-  @Column('text')
+  @Column('text', { unique: true })
   email: string;
 
   @Column('boolean', { default: false })

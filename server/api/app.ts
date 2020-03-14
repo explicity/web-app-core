@@ -7,7 +7,7 @@ import { Express } from 'express';
 import bodyParser from 'body-parser';
 import { Container } from 'typedi';
 import { useContainer as ormUseContainer } from 'typeorm';
-import { routingControllersOptions } from '../config/routing-controllers';
+import { routingControllersOptions } from '../config/routing-controllers.config';
 
 routingUseContainer(Container);
 ormUseContainer(Container);
