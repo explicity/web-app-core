@@ -46,9 +46,13 @@ class RegisterPage extends React.Component<
           round='xsmall'
         >
           <div>
-            <Heading level='2' margin={{ bottom: '30px' }}>Sign up</Heading>
+            <Heading level='2' margin={{ bottom: '30px' }}>
+              Sign up
+            </Heading>
             <RegisterForm handleSubmit={this.handleSubmit} />
-            <Link to='/login'>I am already member</Link>
+            <Link to='/login' className={styles.link}>
+              I am already member
+            </Link>
           </div>
         </Box>
       </Box>

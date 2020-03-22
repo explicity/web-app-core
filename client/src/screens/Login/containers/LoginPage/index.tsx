@@ -50,7 +50,9 @@ class LoginPage extends React.Component<
               Sign in
             </Heading>
             <LoginForm handleSubmit={this.handleSubmit} />
-            <Link to='/register'>Create an account</Link>
+            <Link to='/register' className={styles.link}>
+                Create an account
+            </Link>
           </div>
         </Box>
       </Box>

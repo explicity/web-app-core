@@ -36,31 +36,46 @@ const LoginForm: FunctionComponent<ILoginFormProps & FormikProps<IUser>> = ({
       {/*
       // @ts-ignore */}
       <Form onSubmit={handleSubmit}>
-        <FormField htmlFor='username' error={usernameError && errors.username}>
-          <TextInput
-            id='username'
-            icon={<User />}
-            name='username'
-            type='text'
-            value={values.username}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder='Your username'
-          />
-        </FormField>
-        <FormField htmlFor='password' error={passwordError && errors.password}>
-          <TextInput
-            id='password'
-            type='password'
-            icon={<Lock />}
-            name='password'
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder='Password'
-          />
-        </FormField>
-        <Button type='submit' primary label='Log in' disabled={disabled} />
+        <Box margin={{ bottom: '30px' }}>
+          <FormField
+            htmlFor='username'
+            error={usernameError && errors.username}
+          >
+            <TextInput
+              id='username'
+              icon={<User />}
+              name='username'
+              type='text'
+              value={values.username}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder='Your username'
+            />
+          </FormField>
+          <FormField
+            htmlFor='password'
+            error={passwordError && errors.password}
+          >
+            <TextInput
+              id='password'
+              type='password'
+              icon={<Lock />}
+              name='password'
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder='Password'
+            />
+          </FormField>
+        </Box>
+        <Button
+          type='submit'
+          primary
+          color='neutral-3'
+          label='Log in'
+          disabled={disabled}
+          margin={{ bottom: '30px' }}
+        />
       </Form>
     </Box>
   );

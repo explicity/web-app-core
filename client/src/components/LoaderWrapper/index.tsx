@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react';
 
-import './styles.module.scss';
-
 interface ILoaderWrapperProps {
   loading: boolean;
 }
