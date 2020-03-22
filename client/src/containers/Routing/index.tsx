@@ -6,18 +6,40 @@ import ArticlesMenu from 'screens/ArticlesMenu';
 import LoginPage from 'screens/Login/containers/LoginPage';
 import RegisterPage from 'screens/Login/containers/RegisterPage';
 
-export interface IRoutingProps {}
+import LoaderWrapper from 'components/LoaderWrapper';
+import PrivateRoute from 'components/PrivateRoute';
+import { authService } from '../../screens/Login/services/auth.service';
+import { Role } from 'screens/Login/models/role';
 
-const Routing: React.FunctionComponent<IRoutingProps> = () => {
+export interface IRoutingProps {
+  isLoading: boolean;
+  isAuthorized: boolean;
+}
+
+const Routing: React.FunctionComponent<IRoutingProps> = ({
+  isLoading,
+  isAuthorized
+}) => {
+  const token = authService.tokenValue;
+
   return (
     <Grommet>
       <Switch>
         <Route exact path='/login' component={LoginPage} />
         <Route exact path='/register' component={RegisterPage} />
-        <Route path='/articles' component={ArticlesMenu} />
-        <Route path='/*' component={ArticlesMenu}>
-          <Redirect to='/articles' />
-        </Route>
+        <LoaderWrapper loading={isLoading || (token && !isAuthorized)}>
+          <Switch>
+            <PrivateRoute
+              exact
+              path='/articles'
+              roles={[Role.User, Role.Admin]}
+              component={ArticlesMenu}
+            />
+            <Route path='/*' component={ArticlesMenu}>
+              <Redirect to='/articles' />
+            </Route>
+          </Switch>
+        </LoaderWrapper>
       </Switch>
     </Grommet>
   );
