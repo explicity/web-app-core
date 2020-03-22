@@ -31,7 +31,6 @@ passport.use(
           : done(
               { status: 401, message: 'Passwords do not match.' },
               null,
-              false
             );
       } catch (err) {
         return done(err);

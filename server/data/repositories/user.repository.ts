@@ -16,4 +16,10 @@ export default class UserRepository extends BaseRepository<User> {
       ])
       .getMany();
   }
+
+  getByEmail(email: string): Promise<User> {
+    return this.findOne({
+      where: { email }
+    });
+  }
 }
