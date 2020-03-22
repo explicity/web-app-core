@@ -6,9 +6,30 @@ import { Heading, Box } from 'grommet';
 
 import LoginForm from '../../components/LoginForm';
 import { login } from '../../routines';
+
+import { IBindingCallback1 } from 'models/callback';
+import { IUser } from '../../models/user';
+
 import styles from './styles.module.scss';
 
-class LoginPage extends React.Component<any, any> {
+interface IRegisterPageProps {
+  login: IBindingCallback1<IUser>;
+}
+interface IRegisterPageState {}
+
+class LoginPage extends React.Component<
+  IRegisterPageProps,
+  IRegisterPageState
+> {
+  @boundMethod
+  handleSubmit(data: IUser) {
+    const { login } = this.props;
+
+    if (data.username && data.password) {
+      login(data);
+    }
+  }
+
   render() {
     return (
       <Box
@@ -28,7 +49,7 @@ class LoginPage extends React.Component<any, any> {
             <Heading level='2' margin={{ bottom: '30px' }}>
               Sign in
             </Heading>
-            <LoginForm />
+            <LoginForm handleSubmit={this.handleSubmit} />
             <Link to='/register'>Create an account</Link>
           </div>
         </Box>

@@ -6,8 +6,10 @@ import { Heading, Box } from 'grommet';
 
 import RegisterForm from '../../components/RegisterForm';
 import { register } from '../../routines';
+
 import { IBindingCallback1 } from 'models/callback';
 import { IUserRegistration } from '../../models/user';
+
 import styles from './styles.module.scss';
 
 interface IRegisterPageProps {
