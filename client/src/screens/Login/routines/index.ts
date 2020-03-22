@@ -1,3 +1,5 @@
 import { createRoutine } from 'redux-saga-routines';
 
-export const fetchUserRoutine = createRoutine('FETCH_USER');
+export const fetchUser = createRoutine('FETCH_USER');
+export const login = createRoutine('LOGIN_USER');
+export const register = createRoutine<any>('REGISTER_USER');

@@ -7,5 +7,6 @@ export const getArticles = async (): Promise<IArticle[]> => {
     endpoint: `/articles`,
     type: 'GET'
   });
+  
   return response.json();
 };
