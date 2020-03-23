@@ -30,4 +30,12 @@ export default class UserService {
   async findById(id: string): Promise<User> {
     return await this.userRepository.getById(id);
   }
+
+  async findByEmail(email: string): Promise<User> {
+    return await this.userRepository.findByEmail(email);
+  }
+
+  async findByUsername(username: string): Promise<User> {
+    return await this.userRepository.findByUsername(username);
+  }
 }

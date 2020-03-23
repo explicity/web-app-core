@@ -23,10 +23,10 @@ export default class User extends AbstractEntity {
   @Column('text')
   lastName: string;
 
-  @Column('text', { unique: true })
-  login: string;
+  @Column('text', { unique: true, nullable: false })
+  username: string;
 
-  @Column('text', { unique: true })
+  @Column('text', { unique: true, nullable: false })
   email: string;
 
   @Column('boolean', { default: false })
