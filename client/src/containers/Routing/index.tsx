@@ -1,6 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Grommet } from 'grommet';
 
 import ArticlesMenu from 'screens/ArticlesMenu';
 import LoginPage from 'screens/Login/containers/LoginPage';
@@ -23,11 +23,10 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
   const token = authService.tokenValue;
 
   return (
-    <Grommet>
-      <Switch>
-        <Route exact path='/login' component={LoginPage} />
-        <Route exact path='/register' component={RegisterPage} />
-        <LoaderWrapper loading={isLoading || (token && !isAuthorized)}>
+    <Switch>
+      <Route exact path='/login' component={LoginPage} />
+      <Route exact path='/register' component={RegisterPage} />
+      {/* <LoaderWrapper loading={isLoading || (token && !isAuthorized)}>
           <Switch>
             <PrivateRoute
               exact
@@ -39,10 +38,18 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
               <Redirect to='/articles' />
             </Route>
           </Switch>
-        </LoaderWrapper>
-      </Switch>
-    </Grommet>
+        </LoaderWrapper> */}
+    </Switch>
   );
 };
 
-export default Routing;
+const mapToStateProps = state => {
+  const { isLoading, isAuthorized } = state.user;
+
+  return {
+    isLoading,
+    isAuthorized
+  };
+};
+
+export default connect(mapToStateProps, null)(Routing);

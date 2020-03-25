@@ -22,4 +22,10 @@ export default class UserRepository extends BaseRepository<User> {
       where: { email }
     });
   }
+
+  getByUsername(username: string): Promise<User> {
+    return this.findOne({
+      where: { username }
+    });
+  }
 }

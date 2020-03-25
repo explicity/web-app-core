@@ -1,12 +1,11 @@
 import passport from 'passport';
-import { getRepository, getCustomRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
 import { secret } from './jwt.config';
 import UserRepository from '../data/repositories/user.repository';
 import cryptoHelper from '../common/utils/crypto.helper';
-import User from '../data/entities/User';
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -28,10 +27,7 @@ passport.use(
 
         return (await cryptoHelper.compare(password, user.password))
           ? done(null, user)
-          : done(
-              { status: 401, message: 'Passwords do not match.' },
-              null,
-            );
+          : done({ status: 401, message: 'Passwords do not match.' }, null);
       } catch (err) {
         return done(err);
       }
@@ -45,7 +41,7 @@ passport.use(
     { passReqToCallback: true },
     async ({ body: { email } }, username, password, done) => {
       try {
-        const userRepository = getRepository(User);
+        const userRepository = getCustomRepository(UserRepository);
 
         const userByEmail = await userRepository.getByEmail(email);
         if (userByEmail) {

@@ -18,7 +18,7 @@ export const authService = {
 
 export const login = async (data: IUser) => {
   const response = await callWebApi({
-    endpoint: '/users/login',
+    endpoint: '/auth/login',
     requestData: data,
     type: 'POST'
   });
@@ -30,9 +30,9 @@ export const login = async (data: IUser) => {
   return response.json();
 };
 
-export const register = async (data: IUserRegistration) => {
+export const registration = async (data: IUserRegistration) => {
   const response = await callWebApi({
-    endpoint: '/users/register',
+    endpoint: '/auth/register',
     requestData: data,
     type: 'POST'
   });
