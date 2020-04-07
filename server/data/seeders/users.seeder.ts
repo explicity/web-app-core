@@ -8,7 +8,7 @@ export class UsersSeeder {
   public static async execute() {
     users.forEach(async data => {
       const userRole: Role =
-        roles.find(item => item.role === data.login) || roles[0];
+        roles.find(item => item.role === data.username) || roles[0];
 
       const role = Object.assign(new Role(), userRole);
       const user = Object.assign(new User(), data);

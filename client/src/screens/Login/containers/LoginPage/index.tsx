@@ -25,7 +25,7 @@ class LoginPage extends React.Component<
   handleSubmit(data: IUser) {
     const { login } = this.props;
 
-    if (data.username && data.password) {
+    if (data.email && data.password) {
       login(data);
     }
   }

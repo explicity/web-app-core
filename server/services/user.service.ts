@@ -13,13 +13,11 @@ export default class UserService {
     return await this.userRepository.getAllUsers();
   }
 
-  save({ id, email, firstName, lastName, login }: IShortUser) {
+  save({ id, email, username }: IShortUser) {
     return this.userRepository.save({
       id,
       email,
-      firstName,
-      lastName,
-      login
+      username
     });
   }
 
