@@ -2,7 +2,7 @@ import { JsonController, Get } from 'routing-controllers';
 
 import ArticleService from '../../services/article.service';
 
-@JsonController('/api/articles')
+@JsonController('/articles')
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
 

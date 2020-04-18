@@ -1,24 +1,39 @@
-import { JsonController, UseBefore, Body, Post } from 'routing-controllers';
+import { JsonController, BodyParam, Post } from 'routing-controllers';
+import { UnauthorizedError } from 'routing-controllers';
 
 import AuthService from '../../services/auth.service';
-import authenticationMiddleware from '../middlewares/authentication.middleware';
-import registrationMiddleware from '../middlewares/registration.middleware';
+import UserService from '../../services/user.service';
+import User from '../../data/entities/User';
+import cryptoHelper from '../../common/utils/crypto.helper';
 
-import { IShortUser, IUserRegistration } from '../../common/models/user';
-
-@JsonController('/api/auth')
+@JsonController('/auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
 
-  @UseBefore(registrationMiddleware)
-  @Post('/register')
-  public registerUser(@Body() data: IUserRegistration) {
-    return this.authService.register(data);
-  }
-
-  @UseBefore(authenticationMiddleware)
   @Post('/login')
-  public loginUser(@Body() data: IShortUser) {
-    return this.authService.login(data);
+  async login(
+    @BodyParam('email') email: string,
+    @BodyParam('password') password: string
+  ) {
+    let user: User;
+
+    try {
+      user = await this.userService.findByEmail(email);
+    } catch (error) {
+      throw new UnauthorizedError('Incorrect email.');
+    }
+
+    const isPasswordCorrect = await cryptoHelper.compare(
+      password,
+      user.password
+    );
+    if (!isPasswordCorrect) {
+      throw new UnauthorizedError('Incorrect password.');
+    }
+
+    return this.authService.login(user);
   }
 }

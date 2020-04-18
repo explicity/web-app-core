@@ -2,30 +2,35 @@ import { EntityRepository } from 'typeorm';
 
 import BaseRepository from './base.repository';
 import User from '../entities/User';
+import { IUserRegistration } from '../../common/models/user';
 
 @EntityRepository(User)
 export default class UserRepository extends BaseRepository<User> {
-  async getAllUsers(): Promise<User[]> {
+  public async getAllUsers(): Promise<User[]> {
     return await this.createQueryBuilder('users')
       .select([
         'users.id',
+        'users.username',
         'users.firstName',
         'users.lastName',
-        'users.login',
-        'users.email'
+        'users.email',
       ])
       .getMany();
   }
 
-  async findByEmail(email: string): Promise<User> {
+  public async findByEmail(email: string): Promise<User> {
     return await this.findOne({
-      where: { email }
+      where: { email },
     });
   }
 
-  async findByUsername(username: string): Promise<User> {
+  public async findByUsername(username: string): Promise<User> {
     return await this.findOne({
-      where: { username }
-    })
+      where: { username },
+    });
+  }
+
+  public addUser(user: IUserRegistration) {
+    return this.create(user);
   }
 }
