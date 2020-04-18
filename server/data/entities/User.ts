@@ -17,10 +17,10 @@ import Role from './Role';
 @Entity('users')
 export default class User extends AbstractEntity {
   @Index({ unique: true })
-  @Column('text')
+  @Column('text', { nullable: true })
   firstName: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   lastName: string;
 
   @Column('text', { unique: true, nullable: false })
