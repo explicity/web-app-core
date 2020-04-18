@@ -18,6 +18,6 @@ export const RoleMiddleware = async (action: Action, roles: string[]) => {
   }
 
   if (user && !roles.length) return true;
-  if (roles.indexOf(user.role) > -1) return true;
+  // if (roles.indexOf(user.roles) > -1) return true;
   else return false;
 };

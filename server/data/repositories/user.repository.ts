@@ -30,7 +30,7 @@ export default class UserRepository extends BaseRepository<User> {
     });
   }
 
-  public addUser(user: IUserRegistration) {
-    return this.create(user);
+  public async addUser(user: IUserRegistration) {
+    return await this.save(user);
   }
 }

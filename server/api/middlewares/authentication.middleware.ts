@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import tokenHelper from '../../common/utils/token.helper';
-
+// @ts-ignore
 const extractTokenFromHeader = (req: Request) => {
   if (
     req.headers.authorization &&

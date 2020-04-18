@@ -1,9 +1,11 @@
-import { JsonController, BodyParam, Post } from 'routing-controllers';
+import { JsonController, Body, BodyParam, Post } from 'routing-controllers';
 import { UnauthorizedError } from 'routing-controllers';
 
 import AuthService from '../../services/auth.service';
 import UserService from '../../services/user.service';
+
 import User from '../../data/entities/User';
+import { IUserRegistration } from '../../common/models/user';
 import cryptoHelper from '../../common/utils/crypto.helper';
 
 @JsonController('/auth')
@@ -12,6 +14,25 @@ export class AuthController {
     private authService: AuthService,
     private userService: UserService
   ) {}
+
+  @Post('/register')
+  async register(@Body() userDto: IUserRegistration) {
+    const userByEmail: User = await this.userService.findByEmail(userDto.email);
+
+    if (userByEmail) {
+      throw new UnauthorizedError('Email is already taken.');
+    }
+
+    const userByUsername: User = await this.userService.findByUsername(
+      userDto.username
+    );
+
+    if (userByUsername) {
+      throw new UnauthorizedError('Username is already taken.');
+    }
+
+    return this.authService.register(userDto);
+  }
 
   @Post('/login')
   async login(
