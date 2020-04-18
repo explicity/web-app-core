@@ -15,6 +15,8 @@ export default class UserRepository extends BaseRepository<User> {
         'users.lastName',
         'users.email',
       ])
+      .leftJoin('users.roles', 'role')
+      .addSelect(['role.id', 'role.role'])
       .getMany();
   }
 

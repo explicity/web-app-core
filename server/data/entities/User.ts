@@ -4,7 +4,7 @@ import {
   OneToMany,
   Index,
   ManyToMany,
-  JoinTable
+  JoinTable,
 } from 'typeorm';
 
 import { AbstractEntity } from '../abstract/AbstractEntity';
@@ -35,34 +35,24 @@ export default class User extends AbstractEntity {
   @Column('text')
   password: string;
 
-  @OneToMany(
-    () => Article,
-    article => article.author,
-    { nullable: true }
-  )
+  @OneToMany(() => Article, (article) => article.author, { nullable: true })
   articles: Article[];
 
-  @ManyToMany(
-    () => Newspaper,
-    newspaper => newspaper.users,
-    { nullable: true, lazy: true }
-  )
+  @ManyToMany(() => Newspaper, (newspaper) => newspaper.users, {
+    nullable: true,
+    lazy: true,
+  })
   newspapers: Promise<Newspaper[]>;
 
-  @OneToMany(
-    () => ArticleReaction,
-    articleReaction => articleReaction.user,
-    { nullable: true, cascade: true }
-  )
+  @OneToMany(() => ArticleReaction, (articleReaction) => articleReaction.user, {
+    nullable: true,
+    cascade: true,
+  })
   articleReaction: ArticleReaction[];
 
-  @ManyToMany(
-    () => Role,
-    role => role.users,
-    { nullable: false, lazy: true }
-  )
+  @ManyToMany(() => Role, (role) => role.users, { nullable: false })
   @JoinTable({
-    name: 'roles_to_users'
+    name: 'roles_to_users',
   })
-  roles: Promise<Role[]>;
+  roles: Role[];
 }

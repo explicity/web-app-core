@@ -13,9 +13,9 @@ export default class ArticleRepository extends BaseRepository<Article> {
 
   getAuthorByUserId(id: string): Promise<Article> {
     return this.createQueryBuilder('articles')
-      .leftJoin('okrs.user', 'user')
-      .where('okrs."userId" = :id', { id })
-      .andWhere('okrs.deletedAt is NULL')
+      .leftJoin('article.user', 'user')
+      .where('article."userId" = :id', { id })
+      .andWhere('article.deletedAt is NULL')
       .getOne();
   }
 }
