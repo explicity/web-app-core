@@ -6,13 +6,12 @@ import UserRepository from '../../data/repositories/user.repository';
 
 export const RoleMiddleware = async (action: Action, roles: string[]) => {
   let res = action.response;
-  const id = res.locals.jwtPayload.id;
+  const id = res.locals.jwtPayload.userId;
 
   const userRepository = getCustomRepository(UserRepository);
   let user: User;
   try {
-    // TODO: fix method of getting user roles
-    user = await userRepository.findOneOrFail(id);
+    user = await userRepository.findById(id);
   } catch (id) {
     return false;
   }

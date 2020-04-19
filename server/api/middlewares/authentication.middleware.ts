@@ -17,11 +17,10 @@ export const JWTMiddleware = (
   next: NextFunction
 ) => {
   const token = extractTokenFromHeader(req);
-  let jwtPayload;
+  let jwtPayload: object | string;
 
   try {
     jwtPayload = tokenHelper.verifyToken(token);
-    console.log('jwtPayload');
     res.locals.jwtPayload = jwtPayload;
   } catch (error) {
     res
@@ -30,18 +29,8 @@ export const JWTMiddleware = (
     return;
   }
 
-  //We refresh the token on every request by setting another 1h
-  // const {
-  //   data: { userId, username, role },
-  // } = jwtPayload;
-  // const newToken = jwt.sign(
-  //   { data: { userId, username, role } },
-  //   config.jwtSecret,
-  //   {
-  //     expiresIn: '1h',
-  //   }
-  // );
-  // res.setHeader('Authorization', 'Bearer ' + newToken);
+  const newToken = tokenHelper.createToken(jwtPayload);
+  res.setHeader('Authorization', 'Bearer ' + newToken);
 
   next();
 };

@@ -18,7 +18,10 @@ export default class AuthService {
 
   public async login(user: IShortUser) {
     return {
-      token: tokenHelper.createToken(user),
+      token: tokenHelper.createToken({
+        userId: user.id,
+        username: user.username,
+      }),
       user: await this.userRepository.findById(user.id),
     };
   }
@@ -29,7 +32,7 @@ export default class AuthService {
       id: uuidv4(),
       ...userData,
       password: await cryptoHelper.encrypt(password),
-      roles: [defaultRole]
+      roles: [defaultRole],
     });
     return this.login(newUser);
   }

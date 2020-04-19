@@ -1,8 +1,17 @@
-import { JsonController, Body, BodyParam, Post } from 'routing-controllers';
+import {
+  JsonController,
+  Body,
+  BodyParam,
+  Post,
+  Get,
+  UseBefore,
+  Res,
+} from 'routing-controllers';
 import { UnauthorizedError } from 'routing-controllers';
 
 import AuthService from '../../services/auth.service';
 import UserService from '../../services/user.service';
+import { JWTMiddleware } from '../middlewares/authentication.middleware';
 
 import User from '../../data/entities/User';
 import { IUserRegistration } from '../../common/models/user';
@@ -31,7 +40,7 @@ export class AuthController {
       throw new UnauthorizedError('Username is already taken.');
     }
 
-    return this.authService.register(userDto);
+    return await this.authService.register(userDto);
   }
 
   @Post('/login')
@@ -55,6 +64,14 @@ export class AuthController {
       throw new UnauthorizedError('Incorrect password.');
     }
 
-    return this.authService.login(user);
+    return await this.authService.login(user);
+  }
+
+  @Get('/user')
+  @UseBefore(JWTMiddleware)
+  async getUser(@Res() res: any) {
+    const { userId } = res.locals.jwtPayload.data;
+
+    return await this.userService.findById(userId);
   }
 }
