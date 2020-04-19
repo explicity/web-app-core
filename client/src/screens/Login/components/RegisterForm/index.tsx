@@ -32,102 +32,102 @@ const validationSchema = Yup.object().shape({
 
 const RegisterForm: FunctionComponent<IRegisterFormProps &
   FormikProps<IFormValues>> = ({
-  values,
-  touched,
-  errors,
-  handleChange,
-  handleBlur,
-  handleSubmit,
-  isSubmitting
-}: FormikProps<IFormValues>) => {
-  const usernameError = errors.username && touched.username;
-  const passwordError = errors.password && touched.password;
-  const emailError = errors.email && touched.email;
-  const confirmPasswordError =
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    isSubmitting
+  }: FormikProps<IFormValues>) => {
+    const usernameError = errors.username && touched.username;
+    const passwordError = errors.password && touched.password;
+    const emailError = errors.email && touched.email;
+    const confirmPasswordError =
     errors.confirmPassword && touched.confirmPassword;
-  const disabled =
+    const disabled =
     isSubmitting ||
     usernameError ||
     passwordError ||
     emailError ||
     confirmPasswordError;
 
-  return (
-    <Box width='medium'>
-      {/*
+    return (
+      <Box width='medium'>
+        {/*
       // @ts-ignore */}
-      <Form onSubmit={handleSubmit}>
-        <Box margin={{ bottom: '30px' }}>
-          <FormField
-            htmlFor='username'
-            error={usernameError && errors.username}
-          >
-            <TextInput
-              id='username'
-              icon={<User />}
-              name='username'
-              type='text'
-              value={values.username}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder='Your username'
-            />
-          </FormField>
-          <FormField htmlFor='email' error={emailError && errors.email}>
-            <TextInput
-              id='email'
-              icon={<MailOption />}
-              name='email'
-              type='email'
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder='Your email'
-            />
-          </FormField>
-          <FormField
-            htmlFor='password'
-            error={passwordError && errors.password}
-          >
-            <TextInput
-              id='password'
-              icon={<Lock />}
-              name='password'
-              type='password'
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder='Password'
-            />
-          </FormField>
-          <FormField
-            htmlFor='confirmPassword'
-            error={confirmPasswordError && errors.confirmPassword}
-          >
-            <TextInput
-              id='confirmPassword'
-              icon={<Lock />}
-              name='confirmPassword'
-              type='password'
-              value={values.confirmPassword}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder='Repeat your password'
-            />
-          </FormField>
-        </Box>
-        <Button
-          type='submit'
-          primary
-          color='neutral-3'
-          label='Register'
-          disabled={disabled}
-          margin={{ bottom: '30px' }}
-        />
-      </Form>
-    </Box>
-  );
-};
+        <Form onSubmit={handleSubmit}>
+          <Box margin={{ bottom: '30px' }}>
+            <FormField
+              htmlFor='username'
+              error={usernameError && errors.username}
+            >
+              <TextInput
+                id='username'
+                icon={<User />}
+                name='username'
+                type='text'
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder='Your username'
+              />
+            </FormField>
+            <FormField htmlFor='email' error={emailError && errors.email}>
+              <TextInput
+                id='email'
+                icon={<MailOption />}
+                name='email'
+                type='email'
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder='Your email'
+              />
+            </FormField>
+            <FormField
+              htmlFor='password'
+              error={passwordError && errors.password}
+            >
+              <TextInput
+                id='password'
+                icon={<Lock />}
+                name='password'
+                type='password'
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder='Password'
+              />
+            </FormField>
+            <FormField
+              htmlFor='confirmPassword'
+              error={confirmPasswordError && errors.confirmPassword}
+            >
+              <TextInput
+                id='confirmPassword'
+                icon={<Lock />}
+                name='confirmPassword'
+                type='password'
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder='Repeat your password'
+              />
+            </FormField>
+          </Box>
+          <Button
+            type='submit'
+            primary
+            color='neutral-3'
+            label='Register'
+            disabled={disabled}
+            margin={{ bottom: '30px' }}
+          />
+        </Form>
+      </Box>
+    );
+  };
 
 export default withFormik<IRegisterFormProps, IFormValues>({
   mapPropsToValues: () => ({

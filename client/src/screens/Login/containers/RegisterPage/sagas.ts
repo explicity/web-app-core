@@ -1,18 +1,21 @@
+import { AnyAction } from 'redux';
 import { takeEvery, put, call, all } from 'redux-saga/effects';
 
-import { register } from '../../routines';
-import { IUserRegistration } from '../../models/user'
+import * as authService from '../../services/auth.service';
 
-function* registerUserRequest({ payload }) {
+import { register } from '../../routines';
+
+function* registerUserRequest({ payload }: AnyAction) {
   try {
-    yield put(register.success())
+    const response = yield call(authService.registration, payload);
+
+    yield put(register.success(response));
   } catch (error) {
     yield put(register.failure(error.message || 'Something went wrong!'));
   }
 }
 
 function* watchRegisterUserRequest() {
-  // @ts-ignore
   yield takeEvery(register.TRIGGER, registerUserRequest);
 }
 

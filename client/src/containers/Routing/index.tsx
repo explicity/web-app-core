@@ -26,19 +26,19 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
     <Switch>
       <Route exact path='/login' component={LoginPage} />
       <Route exact path='/register' component={RegisterPage} />
-      {/* <LoaderWrapper loading={isLoading || (token && !isAuthorized)}>
-          <Switch>
-            <PrivateRoute
-              exact
-              path='/articles'
-              roles={[Role.User, Role.Admin]}
-              component={ArticlesMenu}
-            />
-            <Route path='/*' component={ArticlesMenu}>
-              <Redirect to='/articles' />
-            </Route>
-          </Switch>
-        </LoaderWrapper> */}
+      <LoaderWrapper loading={isLoading || (token && !isAuthorized)}>
+        <Switch>
+          <PrivateRoute
+            exact
+            path='/articles'
+            roles={[Role.User, Role.Admin]}
+            component={ArticlesMenu}
+          />
+          <Route path='/*' component={ArticlesMenu}>
+            <Redirect to='/articles' />
+          </Route>
+        </Switch>
+      </LoaderWrapper>
     </Switch>
   );
 };

@@ -19,7 +19,8 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => (
       if (
         rest.currentUser &&
         roles &&
-        !roles.filter(value => rest.currentUser.roles.includes(value)).length
+        !roles.filter((value: string) => rest.currentUser.roles.includes(value))
+          .length
       ) {
         return <Redirect to={{ pathname: '/404' }} />;
       }
