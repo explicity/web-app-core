@@ -3,22 +3,23 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Column,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 export abstract class AbstractEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updatedAt: Date;
 
   @Column({
     type: 'timestamp without time zone',
-    nullable: true
+    nullable: true,
+    select: false,
   })
   deletedAt: Date;
 }

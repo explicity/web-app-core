@@ -42,7 +42,7 @@ export class AuthController {
     let user: User;
 
     try {
-      user = await this.userService.findByEmail(email);
+      user = await this.userService.findByEmailWithPassword(email);
     } catch (error) {
       throw new UnauthorizedError('Incorrect email.');
     }

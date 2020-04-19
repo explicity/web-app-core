@@ -13,7 +13,7 @@ export class UsersSeeder {
       const role = Object.assign(new Role(), userRole);
       const user = Object.assign(new User(), data);
 
-      user.roles = Promise.resolve([role]);
+      user.roles = [role];
       await user.save();
     });
   }

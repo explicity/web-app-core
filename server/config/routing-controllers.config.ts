@@ -12,7 +12,7 @@ export const routingControllersOptions: RoutingControllersOptions = {
   cors: true,
   development: true,
   validation: false,
-  defaultErrorHandler: false,
+  defaultErrorHandler: true,
   defaults: {
     nullResultCode: 404,
     undefinedResultCode: 204,

@@ -24,6 +24,10 @@ export default class UserService {
     return await this.userRepository.findByEmail(email);
   }
 
+  public async findByEmailWithPassword(email: string): Promise<User> {
+    return await this.userRepository.findByEmailWithPassword(email);
+  }
+
   public async findByUsername(username: string): Promise<User> {
     return await this.userRepository.findByUsername(username);
   }

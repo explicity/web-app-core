@@ -32,7 +32,7 @@ export default class User extends AbstractEntity {
   @Column('boolean', { default: false })
   emailConfirmed: boolean;
 
-  @Column('text')
+  @Column('text', { select: false })
   password: string;
 
   @OneToMany(() => Article, (article) => article.author, { nullable: true })

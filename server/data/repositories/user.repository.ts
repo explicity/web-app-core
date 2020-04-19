@@ -20,16 +20,41 @@ export default class UserRepository extends BaseRepository<User> {
       .getMany();
   }
 
+  public async findById(id: string): Promise<User> {
+    return await this.createQueryBuilder('users')
+      .where('users.id = :id', {
+        id,
+      })
+      .leftJoin('users.roles', 'role')
+      .addSelect(['role.id', 'role.role'])
+      .getOne();
+  }
+
   public async findByEmail(email: string): Promise<User> {
-    return await this.findOne({
-      where: { email },
-    });
+    return await this.createQueryBuilder('users')
+      .where('users.email = :email', {
+        email,
+      })
+      .leftJoin('users.roles', 'role')
+      .addSelect(['role.id', 'role.role'])
+      .getOne();
+  }
+
+  public async findByEmailWithPassword(email: string): Promise<User> {
+    return this.createQueryBuilder('users')
+      .addSelect('users.password')
+      .where('users.email = :email', { email })
+      .getOne();
   }
 
   public async findByUsername(username: string): Promise<User> {
-    return await this.findOne({
-      where: { username },
-    });
+    return await this.createQueryBuilder('users')
+      .where('users.username = :username', {
+        username,
+      })
+      .leftJoin('users.roles', 'role')
+      .addSelect(['role.id', 'role.role'])
+      .getOne();
   }
 
   public async addUser(user: IUserRegistration) {
