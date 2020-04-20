@@ -5,7 +5,7 @@ import * as authService from '../../services/auth.service';
 
 import { register } from '../../routines';
 
-function* registerUserRequest({ payload }: AnyAction) {
+function* registerRequest({ payload }: AnyAction) {
   try {
     const response = yield call(authService.registration, payload);
 
@@ -15,10 +15,10 @@ function* registerUserRequest({ payload }: AnyAction) {
   }
 }
 
-function* watchRegisterUserRequest() {
-  yield takeEvery(register.TRIGGER, registerUserRequest);
+function* watchRegisterRequest() {
+  yield takeEvery(register.TRIGGER, registerRequest);
 }
 
 export default function* registerSagas() {
-  yield all([watchRegisterUserRequest()]);
+  yield all([watchRegisterRequest()]);
 }

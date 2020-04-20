@@ -4,9 +4,9 @@ import { takeEvery, put, call, all } from 'redux-saga/effects';
 import * as authService from '../../services/auth.service';
 import * as userService from '../../services/user.service';
 
-import { login, fetchCurrentUser } from '../../routines';
+import { login, fetchCurrentUser, logout } from '../../routines';
 
-function* loginUserRequest({ payload }: AnyAction) {
+function* loginRequest({ payload }: AnyAction) {
   try {
     const response = yield call(authService.login, payload);
 
@@ -28,14 +28,32 @@ function* fetchCurrentUserRequest() {
   }
 }
 
-function* watchLoginUserRequest() {
-  yield takeEvery(login.TRIGGER, loginUserRequest);
+function* logoutRequest() {
+  try {
+    yield call(authService.logout);
+
+    yield put(logout.success());
+  } catch (error) {
+    yield put(logout.failure(error.message || 'Something went wrong!'));
+  }
+}
+
+function* watchLoginRequest() {
+  yield takeEvery(login.TRIGGER, loginRequest);
 }
 
 function* watchFetchCurrentUser() {
   yield takeEvery(fetchCurrentUser.TRIGGER, fetchCurrentUserRequest);
 }
 
+function* watchLogoutRequest() {
+  yield takeEvery(logout.TRIGGER, logoutRequest);
+}
+
 export default function* loginSagas() {
-  yield all([watchLoginUserRequest(), watchFetchCurrentUser()]);
+  yield all([
+    watchLoginRequest(),
+    watchFetchCurrentUser(),
+    watchLogoutRequest()
+  ]);
 }

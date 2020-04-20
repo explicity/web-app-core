@@ -54,7 +54,7 @@ const profile = (state = initialState, action) => {
 };
 
 const requests = combineReducers({
-  profile: reducerCreator([login.TRIGGER])
+  profile: reducerCreator([login.TRIGGER, register.TRIGGER])
 });
 
 export default combineReducers({ profile, requests });
