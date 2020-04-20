@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import ArticlesMenu from 'screens/ArticlesMenu';
 import LoginPage from 'screens/Login/containers/LoginPage';
@@ -43,25 +43,14 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
   return (
     <Switch>
       <LoaderWrapper loading={isLoading || (tokenValue && !isAuthorized)}>
-        <Route exact path='/login' component={renderLogin} />
-        <Route exact path='/register' component={renderRegistration} />
         <Switch>
+          <Route exact path='/login' component={renderLogin} />
+          <Route exact path='/register' component={renderRegistration} />
           <PrivateRoute
             exact
-            path='/articles'
+            path='/'
             roles={[Role.User, Role.Admin]}
             component={ArticlesMenu}
-          />
-          <Route
-            exact
-            path='/'
-            render={() =>
-              (tokenValue && isAuthorized ? (
-                <Redirect to='/articles' />
-              ) : (
-                <Redirect to='/login' />
-              ))
-            }
           />
         </Switch>
       </LoaderWrapper>
