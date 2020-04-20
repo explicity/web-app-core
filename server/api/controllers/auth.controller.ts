@@ -48,11 +48,8 @@ export class AuthController {
     @BodyParam('email') email: string,
     @BodyParam('password') password: string
   ) {
-    let user: User;
-
-    try {
-      user = await this.userService.findByEmailWithPassword(email);
-    } catch (error) {
+    const user: User = await this.userService.findByEmailWithPassword(email);
+    if (!user) {
       throw new UnauthorizedError('Incorrect email.');
     }
 

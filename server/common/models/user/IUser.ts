@@ -10,7 +10,5 @@ export interface IUser extends IShortUser {
   lastName: string;
   emailConfirmed: boolean;
   articles?: IArticle[];
-  newspapers?: INewspaper[];
   articleReaction?: IArticleReaction[];
-  roles: IRole[];
 }

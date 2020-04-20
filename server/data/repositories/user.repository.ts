@@ -2,7 +2,6 @@ import { EntityRepository } from 'typeorm';
 
 import BaseRepository from './base.repository';
 import User from '../entities/User';
-import { IUserRegistration } from '../../common/models/user';
 
 @EntityRepository(User)
 export default class UserRepository extends BaseRepository<User> {
@@ -17,6 +16,8 @@ export default class UserRepository extends BaseRepository<User> {
       ])
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
+      .leftJoin('users.newspapers', 'newspaper')
+      .addSelect(['newspaper.id', 'newspaper.name'])
       .getMany();
   }
 
@@ -27,6 +28,8 @@ export default class UserRepository extends BaseRepository<User> {
       })
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
+      .leftJoin('users.newspapers', 'newspaper')
+      .addSelect(['newspaper.id', 'newspaper.name'])
       .getOne();
   }
 
@@ -37,6 +40,8 @@ export default class UserRepository extends BaseRepository<User> {
       })
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
+      .leftJoin('users.newspapers', 'newspaper')
+      .addSelect(['newspaper.id', 'newspaper.name'])
       .getOne();
   }
 
@@ -54,10 +59,12 @@ export default class UserRepository extends BaseRepository<User> {
       })
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
+      .leftJoin('users.newspapers', 'newspaper')
+      .addSelect(['newspaper.id', 'newspaper.name'])
       .getOne();
   }
 
-  public async addUser(user: IUserRegistration) {
+  public async addUser(user: any) {
     return await this.save(user);
   }
 }

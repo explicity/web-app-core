@@ -4,6 +4,7 @@ import uuidv4 from 'uuid/v4';
 
 import UserRepository from '../data/repositories/user.repository';
 import RoleRepository from '../data/repositories/role.repository';
+import NewspaperRepository from '../data/repositories/newspaper.repository';
 import { IShortUser, IUserRegistration } from '../common/models/user';
 import { RoleEnum } from '../common/enums';
 
@@ -13,7 +14,8 @@ import tokenHelper from '../common/utils/token.helper';
 export default class AuthService {
   constructor(
     @OrmRepository() private userRepository: UserRepository,
-    @OrmRepository() private roleRepository: RoleRepository
+    @OrmRepository() private roleRepository: RoleRepository,
+    @OrmRepository() private newspaperRepository: NewspaperRepository
   ) {}
 
   public async login(user: IShortUser) {
@@ -28,11 +30,16 @@ export default class AuthService {
 
   public async register({ password, ...userData }: IUserRegistration) {
     const defaultRole = await this.roleRepository.findByRole(RoleEnum.user);
+    const defaultNewspaper = await this.newspaperRepository.findByName(
+      'New Kyiv Times'
+    );
+
     const newUser = await this.userRepository.addUser({
       id: uuidv4(),
       ...userData,
       password: await cryptoHelper.encrypt(password),
       roles: [defaultRole],
+      newspapers: [defaultNewspaper],
     });
     return this.login(newUser);
   }

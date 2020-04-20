@@ -1,8 +1,10 @@
+import Newspaper from '../../../data/entities/Newspaper';
 import Role from '../../../data/entities/Role';
 
 export interface IShortUser {
   id?: string;
   email: string;
   username: string;
-  roles: Role[]
+  newspapers?: Newspaper[];
+  roles: Role[];
 }
