@@ -5,14 +5,15 @@ import { boundMethod } from 'autobind-decorator';
 import { Heading, Box } from 'grommet';
 
 import LoginForm from '../../components/LoginForm';
+import ErrorMessage from '../../components/ErrorMessage';
 
 import { IBindingCallback1 } from 'models/callback';
+import { IGlobalState } from 'models/global-state';
 import { IUser } from '../../models/user';
 
 import { login } from '../../routines';
 
 import styles from './styles.module.scss';
-import { IGlobalState } from 'models/global-state';
 
 interface IRegisterPageProps {
   login: IBindingCallback1<IUser>;
@@ -36,7 +37,7 @@ class LoginPage extends React.Component<
   }
 
   render() {
-    const { isAuthorized, loading } = this.props;
+    const { isAuthorized, loading, error } = this.props;
 
     return !isAuthorized ? (
       <Box
@@ -53,6 +54,7 @@ class LoginPage extends React.Component<
           round='xsmall'
         >
           <div>
+            {error && <ErrorMessage error={error} />}
             <Heading level='2' margin={{ bottom: '30px' }}>
               Sign in
             </Heading>

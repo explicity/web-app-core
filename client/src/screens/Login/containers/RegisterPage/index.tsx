@@ -5,8 +5,10 @@ import { boundMethod } from 'autobind-decorator';
 import { Heading, Box } from 'grommet';
 
 import RegisterForm from '../../components/RegisterForm';
+import ErrorMessage from '../../components/ErrorMessage';
 
 import { IBindingCallback1 } from 'models/callback';
+import { IGlobalState } from 'models/global-state';
 import { IUserRegistration } from '../../models/user';
 
 import { register } from '../../routines';
@@ -16,6 +18,8 @@ import styles from './styles.module.scss';
 interface IRegisterPageProps {
   register: IBindingCallback1<IUserRegistration>;
   isAuthorized: boolean;
+  loading: boolean;
+  error: string | null;
 }
 interface IRegisterPageState {}
 
@@ -33,7 +37,7 @@ class RegisterPage extends React.Component<
   }
 
   render() {
-    const { isAuthorized } = this.props;
+    const { isAuthorized, loading, error } = this.props;
 
     return !isAuthorized ? (
       <Box
@@ -50,10 +54,11 @@ class RegisterPage extends React.Component<
           round='xsmall'
         >
           <div>
+            {error && <ErrorMessage error={error} />}
             <Heading level='2' margin={{ bottom: '30px' }}>
               Sign up
             </Heading>
-            <RegisterForm handleSubmit={this.handleSubmit} />
+            <RegisterForm handleSubmit={this.handleSubmit} loading={loading} />
             <Link to='/login' className={styles.link}>
               I am already member
             </Link>
@@ -66,8 +71,17 @@ class RegisterPage extends React.Component<
   }
 }
 
+const mapStateToProps = (state: IGlobalState) => {
+  const { loading, error } = state.user.requests.auth;
+
+  return {
+    loading,
+    error
+  };
+};
+
 const mapDispatchToProps = {
   register
 };
 
-export default connect(null, mapDispatchToProps)(RegisterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
