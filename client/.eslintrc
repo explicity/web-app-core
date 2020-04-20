@@ -36,7 +36,7 @@
     ],
     "jsx-quotes": ["error", "prefer-single"],
     "quotes": [2, "single", "avoid-escape"],
-    "indent": [2, 2],
+    "indent": "off",
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
     "import/extensions": [
       "error",
@@ -52,6 +52,7 @@
     "object-curly-newline": "off",
     "class-methods-use-this": "off",
     "import/order": "off",
+    "implicit-arrow-linebreak": "off",
     "arrow-parens": ["error", "as-needed"],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
   },

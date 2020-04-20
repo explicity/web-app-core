@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { Observable } from 'rxjs';
 
 import ArticlesMenu from 'screens/ArticlesMenu';
 import LoginPage from 'screens/Login/containers/LoginPage';
@@ -10,23 +11,32 @@ import LoaderWrapper from 'components/LoaderWrapper';
 import PrivateRoute from 'components/PrivateRoute';
 import { authService } from '../../screens/Login/services/auth.service';
 import { Role } from 'screens/Login/models/role';
+import { IBindingAction } from 'models/callback';
+
+import { fetchCurrentUser } from 'screens/Login/routines';
 
 export interface IRoutingProps {
   isLoading: boolean;
   isAuthorized: boolean;
+  fetchCurrentUser: IBindingAction;
 }
 
 const Routing: React.FunctionComponent<IRoutingProps> = ({
   isLoading,
-  isAuthorized
+  isAuthorized,
+  fetchCurrentUser
 }) => {
-  const token = authService.tokenValue;
+  useEffect(() => {
+    fetchCurrentUser();
+  }, [fetchCurrentUser]);
+
+  const { isLoggedIn }: { isLoggedIn: Observable<boolean> } = authService;
 
   return (
     <Switch>
       <Route exact path='/login' component={LoginPage} />
       <Route exact path='/register' component={RegisterPage} />
-      <LoaderWrapper loading={isLoading || (token && !isAuthorized)}>
+      <LoaderWrapper loading={isLoading || (isLoggedIn && !isAuthorized)}>
         <Switch>
           <PrivateRoute
             exact
@@ -43,6 +53,10 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
   );
 };
 
+const mapDispatchToProps = {
+  fetchCurrentUser
+};
+
 const mapToStateProps = state => {
   const { isLoading, isAuthorized } = state.user;
 
@@ -52,4 +66,4 @@ const mapToStateProps = state => {
   };
 };
 
-export default connect(mapToStateProps, null)(Routing);
+export default connect(mapToStateProps, mapDispatchToProps)(Routing);

@@ -1,18 +1,27 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import callWebApi from 'helpers/webApi.helper';
 import { handleResponse } from '../helpers/handleResponse';
 
 import { IUserRegistration, IUser } from '../models/user';
 
-const tokenSubject = new BehaviorSubject(
-  JSON.parse(localStorage.getItem('token'))
-);
+const tokenSubject = !!localStorage.getItem('token');
 
 export const authService = {
-  token: tokenSubject.asObservable(),
-  get tokenValue() {
-    return tokenSubject.value;
+  isLoginSubject: new BehaviorSubject<boolean>(tokenSubject),
+
+  get isLoggedIn(): Observable<boolean> {
+    return this.isLoginSubject.asObservable();
+  },
+
+  login(token: string): void {
+    localStorage.setItem('token', token);
+    this.isLoginSubject.next(true);
+  },
+
+  logout(): void {
+    localStorage.removeItem('token');
+    this.isLoginSubject.next(false);
   }
 };
 
@@ -23,11 +32,10 @@ export const login = async (data: IUser) => {
     type: 'POST'
   });
 
-  const token = await handleResponse(response);
-  localStorage.setItem('token', JSON.stringify(token));
-  tokenSubject.next(token);
+  const processedResponse = await handleResponse(response);
+  authService.login(processedResponse.token);
 
-  return response.json();
+  return processedResponse;
 };
 
 export const registration = async (data: IUserRegistration) => {
@@ -37,10 +45,12 @@ export const registration = async (data: IUserRegistration) => {
     type: 'POST'
   });
 
-  return response.json();
+  const processedResponse = await handleResponse(response);
+  authService.login(processedResponse.token);
+
+  return processedResponse;
 };
 
 export const logout = async () => {
-  localStorage.removeItem('token');
-  tokenSubject.next(null);
+  authService.logout();
 };

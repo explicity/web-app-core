@@ -1,4 +1,3 @@
-import { Routine } from 'redux-saga-routines';
 import { combineReducers } from 'redux';
 
 import { reducerCreator } from '../../../helpers/reducer.helper';
@@ -6,24 +5,25 @@ import { register, login, logout } from '../routines';
 
 const initialState = {
   isAuthorized: false,
-  currentUser: null
+  user: null
 };
 
 const profile = (state = initialState, action) => {
   switch (action.type) {
+    case register.SUCCESS:
     case login.SUCCESS: {
-      const { currentUser } = action.payload;
+      const { user } = action.payload;
 
       return {
         ...state,
-        currentUser,
-        isAuthorized: Boolean(currentUser && currentUser.UserIdEncrypted)
+        user,
+        isAuthorized: Boolean(user && user.id)
       };
     }
     case logout.SUCCESS:
       return {
         ...state,
-        currentUser: null,
+        user: null,
         isAuthorized: false
       };
     default:
