@@ -12,6 +12,7 @@ import PrivateRoute from 'components/PrivateRoute';
 import { authService } from '../../screens/Login/services/auth.service';
 import { Role } from 'screens/Login/models/role';
 import { IBindingAction } from 'models/callback';
+import { IGlobalState } from 'models/global-state';
 
 import { fetchCurrentUser } from 'screens/Login/routines';
 
@@ -30,13 +31,21 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
     fetchCurrentUser();
   }, [fetchCurrentUser]);
 
+  const renderLogin = loginProps => (
+    <LoginPage {...loginProps} isAuthorized={isAuthorized} />
+  );
+
+  const renderRegistration = regProps => (
+    <RegisterPage {...regProps} isAuthorized={isAuthorized} />
+  );
+
   const { isLoggedIn }: { isLoggedIn: Observable<boolean> } = authService;
 
   return (
     <Switch>
-      <Route exact path='/login' component={LoginPage} />
-      <Route exact path='/register' component={RegisterPage} />
       <LoaderWrapper loading={isLoading || (isLoggedIn && !isAuthorized)}>
+        <Route exact path='/login' component={renderLogin} />
+        <Route exact path='/register' component={renderRegistration} />
         <Switch>
           <PrivateRoute
             exact
@@ -53,12 +62,17 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
   );
 };
 
+Routing.defaultProps = {
+  isAuthorized: false,
+  isLoading: true
+};
+
 const mapDispatchToProps = {
   fetchCurrentUser
 };
 
-const mapToStateProps = state => {
-  const { isLoading, isAuthorized } = state.user;
+const mapToStateProps = (state: IGlobalState) => {
+  const { isLoading, isAuthorized } = state.user.profile;
 
   return {
     isLoading,

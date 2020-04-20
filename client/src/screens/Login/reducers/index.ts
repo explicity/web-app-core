@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
 import { reducerCreator } from '../../../helpers/reducer.helper';
-import { register, login, logout } from '../routines';
+import { register, login, logout, fetchCurrentUser } from '../routines';
 
 const initialState = {
+  isLoading: true,
   isAuthorized: false,
   user: null
 };
@@ -16,6 +17,17 @@ const profile = (state = initialState, action) => {
 
       return {
         ...state,
+        isLoading: false,
+        user,
+        isAuthorized: Boolean(user && user.id)
+      };
+    }
+    case fetchCurrentUser.SUCCESS: {
+      const user = action.payload;
+
+      return {
+        ...state,
+        isLoading: false,
         user,
         isAuthorized: Boolean(user && user.id)
       };
@@ -26,6 +38,16 @@ const profile = (state = initialState, action) => {
         user: null,
         isAuthorized: false
       };
+    case fetchCurrentUser.FAILURE:
+    case login.FAILURE:
+    case register.FAILURE: {
+      return {
+        ...state,
+        isLoading: false,
+        user: null,
+        isAuthorized: false
+      };
+    }
     default:
       return state;
   }

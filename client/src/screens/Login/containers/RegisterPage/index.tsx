@@ -1,19 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { boundMethod } from 'autobind-decorator';
 import { Heading, Box } from 'grommet';
 
 import RegisterForm from '../../components/RegisterForm';
-import { register } from '../../routines';
 
 import { IBindingCallback1 } from 'models/callback';
 import { IUserRegistration } from '../../models/user';
+
+import { register } from '../../routines';
 
 import styles from './styles.module.scss';
 
 interface IRegisterPageProps {
   register: IBindingCallback1<IUserRegistration>;
+  isAuthorized: boolean;
 }
 interface IRegisterPageState {}
 
@@ -31,7 +33,9 @@ class RegisterPage extends React.Component<
   }
 
   render() {
-    return (
+    const { isAuthorized } = this.props;
+
+    return !isAuthorized ? (
       <Box
         align='center'
         justify='center'
@@ -56,6 +60,8 @@ class RegisterPage extends React.Component<
           </div>
         </Box>
       </Box>
+    ) : (
+      <Redirect to='/' />
     );
   }
 }

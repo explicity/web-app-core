@@ -1,19 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { boundMethod } from 'autobind-decorator';
 import { Heading, Box } from 'grommet';
 
 import LoginForm from '../../components/LoginForm';
-import { login } from '../../routines';
 
 import { IBindingCallback1 } from 'models/callback';
 import { IUser } from '../../models/user';
+
+import { login } from '../../routines';
 
 import styles from './styles.module.scss';
 
 interface IRegisterPageProps {
   login: IBindingCallback1<IUser>;
+  isAuthorized: boolean;
 }
 interface IRegisterPageState {}
 
@@ -31,7 +33,9 @@ class LoginPage extends React.Component<
   }
 
   render() {
-    return (
+    const { isAuthorized } = this.props;
+
+    return !isAuthorized ? (
       <Box
         align='center'
         justify='center'
@@ -56,6 +60,8 @@ class LoginPage extends React.Component<
           </div>
         </Box>
       </Box>
+    ) : (
+      <Redirect to='/' />
     );
   }
 }
