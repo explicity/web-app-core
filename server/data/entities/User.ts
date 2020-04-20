@@ -40,9 +40,8 @@ export default class User extends AbstractEntity {
 
   @ManyToMany(() => Newspaper, (newspaper) => newspaper.users, {
     nullable: true,
-    lazy: true,
   })
-  newspapers: Promise<Newspaper[]>;
+  newspapers: Newspaper[];
 
   @OneToMany(() => ArticleReaction, (articleReaction) => articleReaction.user, {
     nullable: true,
