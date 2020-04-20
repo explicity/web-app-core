@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { reducerCreator } from '../../../helpers/reducer.helper';
+import { reducerCreator } from 'helpers/reducer.helper';
 import { register, login, logout, fetchCurrentUser } from '../routines';
 
 const initialState = {
@@ -54,7 +54,7 @@ const profile = (state = initialState, action) => {
 };
 
 const requests = combineReducers({
-  profile: reducerCreator([login.TRIGGER, register.TRIGGER])
+  auth: reducerCreator([login.TRIGGER, register.TRIGGER])
 });
 
 export default combineReducers({ profile, requests });

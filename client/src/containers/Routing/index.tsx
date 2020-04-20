@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Observable } from 'rxjs';
 
 import ArticlesMenu from 'screens/ArticlesMenu';
 import LoginPage from 'screens/Login/containers/LoginPage';
@@ -39,11 +38,11 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
     <RegisterPage {...regProps} isAuthorized={isAuthorized} />
   );
 
-  const { isLoggedIn }: { isLoggedIn: Observable<boolean> } = authService;
+  const { tokenValue }: { tokenValue: string } = authService;
 
   return (
     <Switch>
-      <LoaderWrapper loading={isLoading || (isLoggedIn && !isAuthorized)}>
+      <LoaderWrapper loading={isLoading || (tokenValue && !isAuthorized)}>
         <Route exact path='/login' component={renderLogin} />
         <Route exact path='/register' component={renderRegistration} />
         <Switch>
@@ -53,9 +52,17 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
             roles={[Role.User, Role.Admin]}
             component={ArticlesMenu}
           />
-          <Route path='/*' component={ArticlesMenu}>
-            <Redirect to='/articles' />
-          </Route>
+          <Route
+            exact
+            path='/'
+            render={() =>
+              (tokenValue && isAuthorized ? (
+                <Redirect to='/articles' />
+              ) : (
+                <Redirect to='/login' />
+              ))
+            }
+          />
         </Switch>
       </LoaderWrapper>
     </Switch>

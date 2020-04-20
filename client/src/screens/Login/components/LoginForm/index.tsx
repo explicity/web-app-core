@@ -9,6 +9,7 @@ import { IUser } from '../../models/user';
 
 interface ILoginFormProps {
   handleSubmit: IBindingCallback1<IUser>;
+  loading: boolean;
 }
 
 const validationSchema = Yup.object().shape({
@@ -23,11 +24,11 @@ const LoginForm: FunctionComponent<ILoginFormProps & FormikProps<IUser>> = ({
   handleChange,
   handleBlur,
   handleSubmit,
-  isSubmitting
+  loading
 }) => {
   const emailError = errors.email && touched.email;
   const passwordError = errors.password && touched.password;
-  const disabled = isSubmitting || emailError || passwordError;
+  const disabled = loading || emailError || passwordError;
 
   return (
     <Box width='medium'>

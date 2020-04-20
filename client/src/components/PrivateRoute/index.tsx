@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { Observable } from 'rxjs';
 
 import { authService } from '../../screens/Login/services/auth.service';
 
@@ -9,9 +8,9 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => (
   <Route
     {...rest}
     render={props => {
-      const { isLoggedIn }: { isLoggedIn: Observable<boolean> } = authService;
+      const { tokenValue }: { tokenValue: string } = authService;
 
-      if (!isLoggedIn) {
+      if (!tokenValue) {
         return (
           <Redirect
             to={{ pathname: '/login', state: { from: props.location } }}

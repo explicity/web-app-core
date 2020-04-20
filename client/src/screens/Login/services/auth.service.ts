@@ -1,27 +1,27 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import callWebApi from 'helpers/webApi.helper';
 import { handleResponse } from '../helpers/handleResponse';
 
 import { IUserRegistration, IUser } from '../models/user';
 
-const tokenSubject = !!localStorage.getItem('token');
+const tokenSubject = localStorage.getItem('token');
 
 export const authService = {
-  isLoginSubject: new BehaviorSubject<boolean>(tokenSubject),
+  isLoginSubject: new BehaviorSubject<string>(tokenSubject),
 
-  get isLoggedIn(): Observable<boolean> {
-    return this.isLoginSubject.asObservable();
+  get tokenValue(): string {
+    return this.isLoginSubject.value;
   },
 
   login(token: string): void {
     localStorage.setItem('token', token);
-    this.isLoginSubject.next(true);
+    this.isLoginSubject.next(token);
   },
 
   logout(): void {
     localStorage.removeItem('token');
-    this.isLoginSubject.next(false);
+    this.isLoginSubject.next(null);
   }
 };
 

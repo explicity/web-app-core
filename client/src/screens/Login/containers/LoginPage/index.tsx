@@ -12,10 +12,13 @@ import { IUser } from '../../models/user';
 import { login } from '../../routines';
 
 import styles from './styles.module.scss';
+import { IGlobalState } from 'models/global-state';
 
 interface IRegisterPageProps {
   login: IBindingCallback1<IUser>;
   isAuthorized: boolean;
+  loading: boolean;
+  error: string | null;
 }
 interface IRegisterPageState {}
 
@@ -33,7 +36,7 @@ class LoginPage extends React.Component<
   }
 
   render() {
-    const { isAuthorized } = this.props;
+    const { isAuthorized, loading } = this.props;
 
     return !isAuthorized ? (
       <Box
@@ -53,7 +56,7 @@ class LoginPage extends React.Component<
             <Heading level='2' margin={{ bottom: '30px' }}>
               Sign in
             </Heading>
-            <LoginForm handleSubmit={this.handleSubmit} />
+            <LoginForm handleSubmit={this.handleSubmit} loading={loading} />
             <Link to='/register' className={styles.link}>
               Create an account
             </Link>
@@ -66,8 +69,17 @@ class LoginPage extends React.Component<
   }
 }
 
+const mapStateToProps = (state: IGlobalState) => {
+  const { loading, error } = state.user.requests.auth;
+
+  return {
+    loading,
+    error
+  };
+};
+
 const mapDispatchToProps = {
   login
 };
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
