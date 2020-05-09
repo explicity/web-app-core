@@ -4,7 +4,7 @@ import {
   OneToMany,
   Index,
   ManyToMany,
-  JoinTable
+  JoinTable,
 } from 'typeorm';
 
 import { AbstractEntity } from '../abstract/AbstractEntity';
@@ -17,52 +17,41 @@ import Role from './Role';
 @Entity('users')
 export default class User extends AbstractEntity {
   @Index({ unique: true })
-  @Column('text')
+  @Column('text', { nullable: true })
   firstName: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   lastName: string;
 
-  @Column('text', { unique: true })
-  login: string;
+  @Column('text', { unique: true, nullable: false })
+  username: string;
 
-  @Column('text')
+  @Column('text', { unique: true, nullable: false })
   email: string;
 
   @Column('boolean', { default: false })
   emailConfirmed: boolean;
 
-  @Column('text')
+  @Column('text', { select: false })
   password: string;
 
-  @OneToMany(
-    () => Article,
-    article => article.author,
-    { nullable: true }
-  )
+  @OneToMany(() => Article, (article) => article.author, { nullable: true })
   articles: Article[];
 
-  @ManyToMany(
-    () => Newspaper,
-    newspaper => newspaper.users,
-    { nullable: true, lazy: true }
-  )
-  newspapers: Promise<Newspaper[]>;
+  @ManyToMany(() => Newspaper, (newspaper) => newspaper.users, {
+    nullable: true,
+  })
+  newspapers: Newspaper[];
 
-  @OneToMany(
-    () => ArticleReaction,
-    articleReaction => articleReaction.user,
-    { nullable: true, cascade: true }
-  )
+  @OneToMany(() => ArticleReaction, (articleReaction) => articleReaction.user, {
+    nullable: true,
+    cascade: true,
+  })
   articleReaction: ArticleReaction[];
 
-  @ManyToMany(
-    () => Role,
-    role => role.users,
-    { nullable: false, lazy: true }
-  )
+  @ManyToMany(() => Role, (role) => role.users, { nullable: false })
   @JoinTable({
-    name: 'roles_to_users'
+    name: 'roles_to_users',
   })
-  roles: Promise<Role[]>;
+  roles: Role[];
 }

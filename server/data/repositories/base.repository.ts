@@ -9,11 +9,11 @@ import {
 export default abstract class BaseRepository<
   T extends ObjectLiteral
 > extends Repository<T> {
-  getAll(): Promise<T[]> {
+  findAll(): Promise<T[]> {
     return this.find();
   }
 
-  getById(id: string): Promise<T> {
+  findById(id: string): Promise<T> {
     return this.findOne({
       where: {
         id

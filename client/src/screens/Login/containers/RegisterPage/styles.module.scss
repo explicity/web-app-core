@@ -1,0 +1,13 @@
+:local(.wrapper) {
+  height: 100vh;
+}
+
+:local(.link) {
+  font-size: 15px;
+  color: grey;
+  transition: .3s;
+
+  &:hover {
+    color: #333
+  }
+}
