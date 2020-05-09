@@ -1,12 +1,14 @@
 import { createConnection } from 'typeorm';
 
-import { UsersSeeder } from './users.seeder';
-import { RolesSeeder } from './roles.seeder';
 import { PermissionsSeeder } from './permissions.seeder';
+import { RolesSeeder } from './roles.seeder';
+import { UsersSeeder } from './users.seeder';
+import { AnnotationsSeeder } from './annotations.seeder';
 import { NewspapersSeeder } from './newspapers.seeder';
 import { ArticlesSeeder } from './articles.seeder';
-import { AnnotationsSeeder } from './annotations.seeder';
+import { TagsSeeder } from './tags.seeder';
 
+// TODO resolve seeding data issue
 createConnection()
   .then(async () => {
     await PermissionsSeeder.execute();
@@ -15,6 +17,7 @@ createConnection()
     await AnnotationsSeeder.execute();
     await NewspapersSeeder.execute();
     await ArticlesSeeder.execute();
+    await TagsSeeder.execute();
   })
   .catch(e => {
     console.error(e);

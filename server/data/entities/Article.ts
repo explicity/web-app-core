@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  ManyToOne,
   Index,
   OneToOne,
   ManyToMany,
@@ -18,6 +17,7 @@ import User from './User';
 import Annotation from './Annotation';
 import Tag from './Tag';
 import ArticleReaction from './ArticleReaction';
+import Comment from './Comment';
 
 @Entity('articles')
 export default class Article extends AbstractEntity {
@@ -29,7 +29,7 @@ export default class Article extends AbstractEntity {
   subtitle: string;
 
   @Column('text')
-  body: string;
+  content: string;
 
   @Column('date')
   publicationDate: Date;
@@ -43,12 +43,21 @@ export default class Article extends AbstractEntity {
   @Column('text', { nullable: true, default: null })
   imageLink: string;
 
-  @ManyToOne(
+  @Column('int', { default: 0 })
+  likeCount: number;
+
+  @Column('int', { default: 0 })
+  commentCount: number;
+
+  @ManyToMany(
     () => User,
     user => user.articles,
     { nullable: false }
   )
-  author: User;
+  @JoinTable({
+    name: 'article_authors'
+  })
+  authors: User[];
 
   @OneToOne(
     () => Annotation,
@@ -58,12 +67,12 @@ export default class Article extends AbstractEntity {
   @JoinColumn()
   annotation: Annotation;
 
-  @ManyToOne(
+  @ManyToMany(
     () => Newspaper,
     newspaper => newspaper.articles,
     { nullable: false }
   )
-  newspaper: Newspaper;
+  newspapers: Newspaper[];
 
   @ManyToMany(
     () => Tag,
@@ -71,9 +80,9 @@ export default class Article extends AbstractEntity {
     { nullable: true }
   )
   @JoinTable({
-    name: 'tags_to_articles'
+    name: 'article_tags'
   })
-  tags: Promise<Tag[]>;
+  tags: Tag[];
 
   @OneToMany(
     () => ArticleReaction,
@@ -81,4 +90,12 @@ export default class Article extends AbstractEntity {
     { nullable: true }
   )
   articleReaction: ArticleReaction[];
+
+
+  @OneToMany(
+    () => Comment,
+    comment => comment.article,
+    { nullable: true }
+  )
+  comments: Comment[];
 }

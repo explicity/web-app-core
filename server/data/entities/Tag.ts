@@ -14,7 +14,7 @@ export default class Tag extends AbstractEntity {
     () => Article,
     article => article.tags
   )
-  articles: Promise<Article[]>;
+  articles: Article[];
 
   @ManyToOne(
     () => Tag,

@@ -5,8 +5,8 @@ import BaseRepository from './base.repository';
 
 @EntityRepository(Annotation)
 export default class AnnotationRepository extends BaseRepository<Annotation> {
-  getByTitle(title: string): Promise<Annotation> {
-    return this.findOne({
+  public async getByTitle(title: string): Promise<Annotation> {
+    return await this.findOne({
       where: {
         title
       }

@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  OneToMany,
   Index,
   ManyToMany,
   JoinTable
@@ -16,13 +15,16 @@ import User from './User';
 export default class Newspaper extends AbstractEntity {
   @Index({ unique: true })
   @Column('text')
-  name: string;
+  title: string;
 
-  @OneToMany(
+  @ManyToMany(
     () => Article,
-    article => article.newspaper,
+    article => article.newspapers,
     { nullable: true }
   )
+  @JoinTable({
+    name: 'newspaper_articles'
+  })
   articles: Article[];
 
   @ManyToMany(
@@ -31,7 +33,7 @@ export default class Newspaper extends AbstractEntity {
     { nullable: true }
   )
   @JoinTable({
-    name: 'users_to_newspapers'
+    name: 'newspaper_followers'
   })
   users: User[];
 }

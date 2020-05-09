@@ -13,6 +13,7 @@ import Article from './Article';
 import ArticleReaction from './ArticleReaction';
 import Newspaper from './Newspaper';
 import Role from './Role';
+import Comment from './Comment';
 
 @Entity('users')
 export default class User extends AbstractEntity {
@@ -35,7 +36,10 @@ export default class User extends AbstractEntity {
   @Column('text', { select: false })
   password: string;
 
-  @OneToMany(() => Article, (article) => article.author, { nullable: true })
+  @Column('text', { nullable: true, default: null })
+  avatarImageLink: string;
+
+  @ManyToMany(() => Article, (article) => article.authors, { nullable: true })
   articles: Article[];
 
   @ManyToMany(() => Newspaper, (newspaper) => newspaper.users, {
@@ -45,9 +49,13 @@ export default class User extends AbstractEntity {
 
   @OneToMany(() => ArticleReaction, (articleReaction) => articleReaction.user, {
     nullable: true,
-    cascade: true,
   })
   articleReaction: ArticleReaction[];
+
+  @OneToMany(() => Comment, (comment) => comment.user, {
+    nullable: true,
+  })
+  comments: Comment[];
 
   @ManyToMany(() => Role, (role) => role.users, { nullable: false })
   @JoinTable({

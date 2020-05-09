@@ -2,6 +2,7 @@ import { IShortUser } from './IShortUser';
 
 import { IArticle } from '../article';
 import { IArticleReaction } from '../article-reaction';
+import { IComment } from '../comment';
 
 export interface IUser extends IShortUser {
   firstName: string;
@@ -9,4 +10,5 @@ export interface IUser extends IShortUser {
   emailConfirmed: boolean;
   articles?: IArticle[];
   articleReaction?: IArticleReaction[];
+  comments?: IComment[];
 }

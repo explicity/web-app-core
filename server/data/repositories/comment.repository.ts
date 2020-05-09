@@ -5,8 +5,14 @@ import BaseRepository from './base.repository';
 
 @EntityRepository(Comment)
 export default class CommentRepository extends BaseRepository<Comment> {
-  getByUserIdAndArticleId(userId: string, articleId: string) {
-    return this.createQueryBuilder('comments')
+  public async getByUserIdAndArticleId({
+    userId,
+    articleId
+  }: {
+    userId: string;
+    articleId: string;
+  }): Promise<Comment> {
+    return await this.createQueryBuilder('comments')
       .select(['comment.id as id', 'comment.body as "comment"'])
       .leftJoin('comment.article', 'article')
       .leftJoin('comment.user', 'user')

@@ -2,7 +2,7 @@ import { GenreEnum } from '../../enums';
 
 import { IUser } from '../user';
 import { IAnnotation } from '../annotation';
-
+// TODO fix client models due to db changes
 export interface IArticle {
   id?: string;
   title: string;
