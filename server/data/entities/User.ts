@@ -35,6 +35,9 @@ export default class User extends AbstractEntity {
   @Column('text', { select: false })
   password: string;
 
+  @Column('text', { nullable: true, default: null })
+  avatarImageLink: string;
+
   @ManyToMany(() => Article, (article) => article.authors, { nullable: true })
   articles: Article[];
 

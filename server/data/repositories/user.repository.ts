@@ -17,7 +17,7 @@ export default class UserRepository extends BaseRepository<User> {
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
       .leftJoin('users.newspapers', 'newspaper')
-      .addSelect(['newspaper.id', 'newspaper.name'])
+      .addSelect(['newspaper.id', 'newspaper.title'])
       .getMany();
   }
 
@@ -29,7 +29,7 @@ export default class UserRepository extends BaseRepository<User> {
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
       .leftJoin('users.newspapers', 'newspaper')
-      .addSelect(['newspaper.id', 'newspaper.name'])
+      .addSelect(['newspaper.id', 'newspaper.title'])
       .getOne();
   }
 
@@ -41,7 +41,7 @@ export default class UserRepository extends BaseRepository<User> {
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
       .leftJoin('users.newspapers', 'newspaper')
-      .addSelect(['newspaper.id', 'newspaper.name'])
+      .addSelect(['newspaper.id', 'newspaper.title'])
       .getOne();
   }
 
@@ -60,7 +60,7 @@ export default class UserRepository extends BaseRepository<User> {
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
       .leftJoin('users.newspapers', 'newspaper')
-      .addSelect(['newspaper.id', 'newspaper.name'])
+      .addSelect(['newspaper.id', 'newspaper.title'])
       .getOne();
   }
 
