@@ -10,11 +10,11 @@ import { IArticleNew } from '../../common/models/article';
 export default class ArticleRepository extends BaseRepository<Article> {
   async getArticles(): Promise<Article[]> {
     return await this.find({
-      relations: []
+      relations: ['tags']
     });
   }
 
-  async getArticleByUserId(id: string): Promise<Article> {
+  async getAuthorByUserId(id: string): Promise<Article> {
     return await this.createQueryBuilder('articles')
       .leftJoin('article.user', 'user')
       .where('article."userId" = :id', { id })

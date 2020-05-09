@@ -33,5 +33,5 @@ export default class Newspaper extends AbstractEntity {
   @JoinTable({
     name: 'users_to_newspapers'
   })
-  users: Promise<User[]>;
+  users: User[];
 }

@@ -19,10 +19,12 @@
     ],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-interface": "off",
     "comma-dangle": ["error", "never"],
     "no-multiple-empty-lines": ["error", { "max": 1 }],
     "max-len": ["error", { "code": 120 }],
     "react/prop-types": "off",
+    "no-shadow": "off",
     "react/jsx-props-no-spreading": "off",
     "no-useless-constructor": "off",
     "import/prefer-default-export": "off",
@@ -32,6 +34,9 @@
       "always",
       { "ignoreClassFields": true }
     ],
+    "jsx-quotes": ["error", "prefer-single"],
+    "quotes": [2, "single", "avoid-escape"],
+    "indent": "off",
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
     "import/extensions": [
       "error",
@@ -43,9 +48,11 @@
         "tsx": "never"
       }
     ],
+    "operator-linebreak": ["error", "after"],
     "object-curly-newline": "off",
     "class-methods-use-this": "off",
     "import/order": "off",
+    "implicit-arrow-linebreak": "off",
     "arrow-parens": ["error", "as-needed"],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
   },

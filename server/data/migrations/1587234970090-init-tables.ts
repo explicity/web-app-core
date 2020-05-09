@@ -1,9 +1,9 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class initTables1582936166816 implements MigrationInterface {
-    name = 'initTables1582936166816'
+export class initTables1587234970090 implements MigrationInterface {
+    name = 'initTables1587234970090'
 
-    public async up(queryRunner: QueryRunner): Promise<any> {
+    public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "article_reactions" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "isLiked" boolean NOT NULL DEFAULT true, "articleId" uuid NOT NULL, "userId" uuid NOT NULL, CONSTRAINT "UQ_c73d1aec06b48d4de2f99425cf1" UNIQUE ("userId", "articleId"), CONSTRAINT "PK_1e233223c5b3ca86885a69cfbd9" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_62817c7227130f4398f8f668d0" ON "article_reactions" ("isLiked") `, undefined);
         await queryRunner.query(`CREATE TABLE "permissions" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "name" text NOT NULL, CONSTRAINT "UQ_48ce552495d14eae9b187bb6716" UNIQUE ("name"), CONSTRAINT "PK_920331560282b8bd21bb02290df" PRIMARY KEY ("id"))`, undefined);
@@ -11,7 +11,7 @@ export class initTables1582936166816 implements MigrationInterface {
         await queryRunner.query(`CREATE TYPE "roles_role_enum" AS ENUM('User', 'Admin', 'Guest')`, undefined);
         await queryRunner.query(`CREATE TABLE "roles" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "role" "roles_role_enum" NOT NULL DEFAULT 'Guest', "description" text, CONSTRAINT "PK_c1433d71a4838793a49dcad46ab" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_ccc7c1489f3a6b3c9b47d4537c" ON "roles" ("role") `, undefined);
-        await queryRunner.query(`CREATE TABLE "users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "firstName" text NOT NULL, "lastName" text NOT NULL, "login" text NOT NULL, "email" text NOT NULL, "emailConfirmed" boolean NOT NULL DEFAULT false, "password" text NOT NULL, CONSTRAINT "UQ_2d443082eccd5198f95f2a36e2c" UNIQUE ("login"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`, undefined);
+        await queryRunner.query(`CREATE TABLE "users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "firstName" text, "lastName" text, "username" text NOT NULL, "email" text NOT NULL, "emailConfirmed" boolean NOT NULL DEFAULT false, "password" text NOT NULL, CONSTRAINT "UQ_fe0bb3f6520ee0469504521e710" UNIQUE ("username"), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_5372672fbfd1677205e0ce3ece" ON "users" ("firstName") `, undefined);
         await queryRunner.query(`CREATE TABLE "newspapers" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "name" text NOT NULL, CONSTRAINT "PK_617c33c3772b6f187161277b6f9" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_1bd94cbaf1a96e70312897b6e4" ON "newspapers" ("name") `, undefined);
@@ -54,7 +54,7 @@ export class initTables1582936166816 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "tags_to_articles" ADD CONSTRAINT "FK_737f2ec186085f5eff3b1fa948b" FOREIGN KEY ("tagsId") REFERENCES "tags"("id") ON DELETE CASCADE ON UPDATE NO ACTION`, undefined);
     }
 
-    public async down(queryRunner: QueryRunner): Promise<any> {
+    public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "tags_to_articles" DROP CONSTRAINT "FK_737f2ec186085f5eff3b1fa948b"`, undefined);
         await queryRunner.query(`ALTER TABLE "tags_to_articles" DROP CONSTRAINT "FK_9cee50ba142c1c8b1c622323cb7"`, undefined);
         await queryRunner.query(`ALTER TABLE "users_to_newspapers" DROP CONSTRAINT "FK_8649518f0e9cdd9d79d4007691b"`, undefined);

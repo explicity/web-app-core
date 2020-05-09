@@ -7,7 +7,8 @@ export const env = {
   app: {
     port: getOsEnv('APP_PORT'),
     dirs: {
-      controllers: getOsPaths('APP_CONTROLLERS')
-    }
-  }
+      controllers: getOsPaths('APP_CONTROLLERS'),
+      middlewares: getOsPaths('APP_MIDDLEWARES'),
+    },
+  },
 };

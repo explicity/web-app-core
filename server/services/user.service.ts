@@ -2,28 +2,33 @@ import { Service } from 'typedi';
 import { OrmRepository } from 'typeorm-typedi-extensions';
 
 import UserRepository from '../data/repositories/user.repository';
-import { IShortUser } from '../common/models/user';
 import User from '../data/entities/User';
 
 @Service()
 export default class UserService {
   constructor(@OrmRepository() private userRepository: UserRepository) {}
 
-  async getAll(): Promise<User[]> {
+  public async getAll(): Promise<User[]> {
     return await this.userRepository.getAllUsers();
   }
 
-  async saveUser({ id, email, firstName, lastName, login }: IShortUser) {
-    return await this.userRepository.save({
-      id,
-      email,
-      firstName,
-      lastName,
-      login
-    });
+  public async deleteUser(id: string) {
+    return await this.userRepository.deleteById(id);
   }
 
-  async deleteUser(id: string) {
-    return await this.userRepository.deleteById(id);
+  public async findById(id: string): Promise<User> {
+    return await this.userRepository.findById(id);
+  }
+
+  public async findByEmail(email: string): Promise<User> {
+    return await this.userRepository.findByEmail(email);
+  }
+
+  public async findByEmailWithPassword(email: string): Promise<User> {
+    return await this.userRepository.findByEmailWithPassword(email);
+  }
+
+  public async findByUsername(username: string): Promise<User> {
+    return await this.userRepository.findByUsername(username);
   }
 }

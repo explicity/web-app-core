@@ -12,7 +12,7 @@ import ArticleService from '../../services/article.service';
 import { IArticleNew } from '../../common/models/article';
 import Article from '../../data/entities/Article';
 
-@JsonController('/api/articles')
+@JsonController('/articles')
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
