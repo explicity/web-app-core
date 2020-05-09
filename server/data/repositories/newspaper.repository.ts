@@ -15,10 +15,39 @@ export default class NewspaperRepository extends BaseRepository<Newspaper> {
     });
   }
 
-  public async getNewspaperArticles(id: string): Promise<Newspaper> {
+  public async findById(newspaperId: string): Promise<Newspaper> {
     return await this.createQueryBuilder('newspapers')
-      .where('newspapers.id = :id', { id })
-      .leftJoinAndSelect('newspapers.articles', 'article')
+      .leftJoinAndSelect('newspapers.users', 'users')
+      .where('newspapers.id = :newspaperId', { newspaperId })
+      .getOne();
+  }
+
+  // TODO add joining tags
+  public async getNewspaperArticles(newspaperId: string): Promise<Newspaper> {
+    return await this.createQueryBuilder('newspapers')
+      .select([
+        'newspapers.id',
+        'newspapers.title',
+        'articles.id',
+        'articles.title',
+        'articles.subtitle',
+        'articles.genre',
+        'articles.imageLink',
+        'articles.publicationDate',
+        'articles.likeCount',
+        'articles.commentCount',
+        'annotation.id',
+        'annotation.title',
+        'annotation.body',
+        'authors.id',
+        'authors.firstName',
+        'authors.lastName',
+        'authors.avatarImageLink'
+      ])
+      .leftJoin('newspapers.articles', 'articles')
+      .leftJoin('articles.annotation', 'annotation')
+      .leftJoin('articles.authors', 'authors')
+      .where('newspapers.id = :newspaperId', { newspaperId })
       .getOne();
   }
 }

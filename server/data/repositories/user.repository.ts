@@ -12,7 +12,8 @@ export default class UserRepository extends BaseRepository<User> {
         'users.username',
         'users.firstName',
         'users.lastName',
-        'users.email'
+        'users.email',
+        'users.avatarImageLink'
       ])
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])

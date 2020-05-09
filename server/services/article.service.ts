@@ -18,6 +18,10 @@ export default class ArticleService {
     return await this.articleRepository.findById(id);
   }
 
+  public async findByNewspaperId(newspaperId: string): Promise<Article[]> {
+    return await this.articleRepository.findByNewspaperId(newspaperId);
+  }
+
   public async saveArticle(data: IArticleNew): Promise<string> {
     return await this.articleRepository.createAndSave(data);
   }

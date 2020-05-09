@@ -14,12 +14,30 @@ export default class ArticleRepository extends BaseRepository<Article> {
     });
   }
 
-  public async findByUserId(userId: string): Promise<Article[]> {
+  public async findByNewspaperId(newspaperId: string): Promise<Article[]> {
     return await this.createQueryBuilder('articles')
-      .leftJoin('article.user', 'user')
-      .where('article."userId" = :userId', { userId })
+      .leftJoin('article.newspaper', 'newspaper')
+      .where('article."newspaperId" = :newspaperId', { newspaperId })
       .andWhere('article.deletedAt is NULL')
       .getMany();
+  }
+
+  public async findByNewspaperIdAndArticleId({
+    newspaperId,
+    articleId
+  }: {
+    newspaperId: string;
+    articleId: string;
+  }): Promise<Article> {
+    return await this.createQueryBuilder('articles')
+      .leftJoin('articles.newspapers', 'newspaper')
+      .leftJoinAndSelect('articles.annotation', 'annotation')
+      .leftJoinAndSelect('articles.authors', 'authors')
+      .where('articles.id = :articleId AND newspaper.id = :newspaperId', {
+        articleId,
+        newspaperId
+      })
+      .getOne();
   }
 
   public async createAndSave(article: IArticleNew): Promise<string> {
@@ -58,7 +76,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
     return (
       typeof article === 'object' &&
       typeof article.title === 'string' &&
-      typeof article.body === 'string' &&
+      typeof article.content === 'string' &&
       ArticleRepository.isGenre(article.genre)
     );
   }
