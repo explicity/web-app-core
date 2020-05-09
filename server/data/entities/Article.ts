@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  ManyToOne,
   Index,
   OneToOne,
   ManyToMany,
@@ -67,12 +66,12 @@ export default class Article extends AbstractEntity {
   @JoinColumn()
   annotation: Annotation;
 
-  @ManyToOne(
+  @ManyToMany(
     () => Newspaper,
     newspaper => newspaper.articles,
     { nullable: false }
   )
-  newspaper: Newspaper;
+  newspapers: Newspaper[];
 
   @ManyToMany(
     () => Tag,
@@ -80,7 +79,7 @@ export default class Article extends AbstractEntity {
     { nullable: true }
   )
   @JoinTable({
-    name: 'tags_to_articles'
+    name: 'article_tags'
   })
   tags: Promise<Tag[]>;
 

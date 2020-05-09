@@ -17,7 +17,7 @@ export interface IArticle {
   likeCount: number;
   commentCount: number;
   authors: IUser[];
-  newspaper: INewspaper;
+  newspapers: INewspaper[];
   annotation: IAnnotation;
   tags?: ITag[];
   articleReaction?: IArticleReaction[];

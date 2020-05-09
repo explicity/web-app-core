@@ -14,6 +14,6 @@ export interface IArticleNew {
   commentCount: number;
   imageLink?: string;
   authors: IUser[];
-  newspaper: INewspaper;
+  newspapers: INewspaper[];
   tags?: ITag[];
 }

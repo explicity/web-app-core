@@ -7,6 +7,7 @@ import { AnnotationsSeeder } from './annotations.seeder';
 import { NewspapersSeeder } from './newspapers.seeder';
 import { ArticlesSeeder } from './articles.seeder';
 
+// TODO resolve seeding data issue
 createConnection()
   .then(async () => {
     await PermissionsSeeder.execute();

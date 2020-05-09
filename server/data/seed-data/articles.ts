@@ -18,7 +18,7 @@ export const articles = [
     genre: GenreEnum.school,
     authors: [users[1]],
     annotation: annotations[0],
-    newspaper: newspapers[0]
+    newspapers: [newspapers[0]]
   },
   {
     id: '6d7058a7-1d8e-40ae-a3cb-21b3f06e0ac6',
@@ -28,6 +28,6 @@ export const articles = [
     genre: GenreEnum.beauty,
     authors: [users[2]],
     annotation: annotations[1],
-    newspaper: newspapers[0]
+    newspapers: [newspapers[0]]
   }
 ] as Article[];
