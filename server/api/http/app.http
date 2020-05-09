@@ -1,9 +1,31 @@
-###
-
-GET http://localhost:3001/api/articles
+GET http://localhost:3001/api/users
 Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/api/users
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{"email": "guest@gmail.com", "password": "guest"}
+
+###
+
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{"email": "test@gmail.com", "username": "test", "password": "test"}
+
+###
+
+GET http://localhost:3001/api/newspapers
+Content-Type: application/json
+
+###
+
+GET http://localhost:3001/api/newspapers/a785c819-8494-42c4-bc03-ce2f0477d4a9/articles
+Content-Type: application/json
+
+###
+
+GET http://localhost:3001/api/newspapers/a785c819-8494-42c4-bc03-ce2f0477d4a9/articles/4cb2f551-b01c-45c2-b4be-62f1b32aa93c
 Content-Type: application/json

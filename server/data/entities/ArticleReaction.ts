@@ -18,21 +18,15 @@ export default class ArticleReaction extends AbstractEntity {
   @Column()
   userId: string;
 
-  @ManyToOne(
-    () => Article,
-    article => article.articleReaction
-  )
+  @ManyToOne(() => Article, (article) => article.articleReaction)
   @JoinColumn({
-    name: 'articleId'
+    name: 'articleId',
   })
   article: Article;
 
-  @ManyToOne(
-    () => User,
-    user => user.articleReaction,
-  )
+  @ManyToOne(() => User, (user) => user.articleReaction)
   @JoinColumn({
-    name: 'userId'
+    name: 'userId',
   })
   user: User;
 }

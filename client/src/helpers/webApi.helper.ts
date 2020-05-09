@@ -1,4 +1,6 @@
 import * as queryString from 'query-string';
+
+import { authHeader } from 'screens/Login/helpers/authHeader';
 import { IFetchArgs, IFetchArgsData } from 'models/fetch';
 
 function getFetchUrl({ endpoint, queryParams }: IFetchArgsData) {
@@ -9,23 +11,32 @@ function getFetchUrl({ endpoint, queryParams }: IFetchArgsData) {
   }`;
 }
 
-function getFetchArgs(args: IFetchArgsData): IFetchArgs {
+function getInitHeaders(
+  args: IFetchArgsData,
+  contentType = 'application/json',
+  hasContent = true
+) {
   const headers: HeadersInit = new Headers();
-  headers.set('Content-Type', 'application/json');
-  headers.set('Accept', 'application/json');
+  const header = authHeader();
+  if (!args.skipAuthorization) {
+    headers.set('Authorization', header.Authorization);
+  }
+  if (hasContent) {
+    headers.set('Content-Type', contentType);
+  }
+  return headers;
+}
 
-  let body: string;
-  if (args.requestData) {
-    if (args.type === 'GET') {
-      throw new Error('GET request does not support request body.');
-    }
-    body = JSON.stringify(args.requestData);
+function getFetchArgs(args: IFetchArgsData): IFetchArgs {
+  const headers = getInitHeaders(args);
+  if (args.requestData && args.type === 'GET') {
+    throw new Error('GET request does not support request body.');
   }
 
   return {
     method: args.type,
     headers,
-    ...(args.type === 'GET' ? {} : { body })
+    ...(args.type === 'GET' ? {} : { body: JSON.stringify(args.requestData) })
   };
 }
 
@@ -44,11 +55,7 @@ export async function throwIfResponseFailed(res: Response) {
 export default async function callWebApi(
   args: IFetchArgsData
 ): Promise<Response> {
-  try {
-    const res = await fetch(getFetchUrl(args), getFetchArgs(args));
-    await throwIfResponseFailed(res);
-    return res;
-  } catch (err) {
-    throw err;
-  }
+  const res = await fetch(getFetchUrl(args), getFetchArgs(args));
+  await throwIfResponseFailed(res);
+  return res;
 }

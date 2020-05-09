@@ -7,8 +7,14 @@ import BaseRepository from './base.repository';
 export default class ArticleReactionRepository extends BaseRepository<
   ArticleReaction
 > {
-  getByUserIdAndArticleId(userId: string, articleId: string) {
-    return this.createQueryBuilder('articleReactions')
+  public async getByUserIdAndArticleId({
+    userId,
+    articleId
+  }: {
+    userId: string;
+    articleId: string;
+  }): Promise<ArticleReaction> {
+    return await this.createQueryBuilder('articleReactions')
       .select([
         'articleReaction.id as id',
         'articleReaction.isLiked as "isLiked"'

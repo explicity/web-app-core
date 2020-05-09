@@ -25,8 +25,7 @@ export default class Comment extends AbstractEntity {
 
   @ManyToOne(
     () => Article,
-    article => article,
-    { cascade: true }
+    article => article.comments,
   )
   @JoinColumn({
     name: 'articleId'
@@ -35,8 +34,7 @@ export default class Comment extends AbstractEntity {
 
   @ManyToOne(
     () => User,
-    user => user,
-    { cascade: true }
+    user => user.comments,
   )
   @JoinColumn({
     name: 'userId'

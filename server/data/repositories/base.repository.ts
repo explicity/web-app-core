@@ -9,11 +9,11 @@ import {
 export default abstract class BaseRepository<
   T extends ObjectLiteral
 > extends Repository<T> {
-  getAll(): Promise<T[]> {
+  public findAll(): Promise<T[]> {
     return this.find();
   }
 
-  getById(id: string): Promise<T> {
+  public findById(id: string): Promise<T> {
     return this.findOne({
       where: {
         id
@@ -21,15 +21,15 @@ export default abstract class BaseRepository<
     });
   }
 
-  createItem(data: T): Promise<InsertResult> {
+  public createItem(data: T): Promise<InsertResult> {
     return this.insert(data);
   }
 
-  updateById(id: string, data: T): Promise<UpdateResult> {
+  public updateById(id: string, data: T): Promise<UpdateResult> {
     return this.update(id, data);
   }
 
-  deleteById(id: string): Promise<DeleteResult> {
+  public deleteById(id: string): Promise<DeleteResult> {
     return this.delete(id);
   }
 }

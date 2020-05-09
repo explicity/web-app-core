@@ -1,14 +1,14 @@
 import { IShortUser } from './IShortUser';
 
-import { IRole } from '../role/IRole';
 import { IArticle } from '../article';
-import { INewspaper } from '../newspaper';
 import { IArticleReaction } from '../article-reaction';
+import { IComment } from '../comment';
 
 export interface IUser extends IShortUser {
+  firstName: string;
+  lastName: string;
   emailConfirmed: boolean;
   articles?: IArticle[];
-  newspapers?: INewspaper[];
   articleReaction?: IArticleReaction[];
-  roles: IRole[];
+  comments?: IComment[];
 }
