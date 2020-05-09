@@ -10,11 +10,13 @@ export interface IArticle {
   id?: string;
   title: string;
   subtitle?: string;
-  body: string;
+  content: string;
   publicationDate: Date;
   genre: GenreEnum;
   imageLink?: string;
-  author: IUser;
+  likeCount: number;
+  commentCount: number;
+  authors: IUser[];
   newspaper: INewspaper;
   annotation: IAnnotation;
   tags?: ITag[];

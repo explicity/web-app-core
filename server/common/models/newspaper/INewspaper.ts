@@ -3,7 +3,7 @@ import { IArticle } from '../article';
 
 export interface INewspaper {
   id?: string;
-  name: string;
+  title: string;
   articles?: IArticle[];
   users?: IUser[];
 }

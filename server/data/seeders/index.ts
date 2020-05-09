@@ -1,11 +1,11 @@
 import { createConnection } from 'typeorm';
 
-import { UsersSeeder } from './users.seeder';
-import { RolesSeeder } from './roles.seeder';
 import { PermissionsSeeder } from './permissions.seeder';
+import { RolesSeeder } from './roles.seeder';
+import { UsersSeeder } from './users.seeder';
+import { AnnotationsSeeder } from './annotations.seeder';
 import { NewspapersSeeder } from './newspapers.seeder';
 import { ArticlesSeeder } from './articles.seeder';
-import { AnnotationsSeeder } from './annotations.seeder';
 
 createConnection()
   .then(async () => {
