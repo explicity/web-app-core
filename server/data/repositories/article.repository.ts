@@ -8,13 +8,13 @@ import { IArticleNew } from '../../common/models/article';
 
 @EntityRepository(Article)
 export default class ArticleRepository extends BaseRepository<Article> {
-  public async getArticles(): Promise<Article[]> {
+  public async getAllArticles(): Promise<Article[]> {
     return await this.find({
       relations: ['tags']
     });
   }
 
-  public async getArticlesByUserId(userId: string): Promise<Article[]> {
+  public async findByUserId(userId: string): Promise<Article[]> {
     return await this.createQueryBuilder('articles')
       .leftJoin('article.user', 'user')
       .where('article."userId" = :userId', { userId })
@@ -30,7 +30,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
     return entity.id;
   }
 
-  public async getArticleById(id: string): Promise<Article> {
+  public async findById(id: string): Promise<Article> {
     const article = await this.findOne({
       where: { id }
     });

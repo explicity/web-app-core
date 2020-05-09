@@ -9,7 +9,7 @@ import Tag from '../data/entities/Tag';
 export default class TagService {
   constructor(@OrmRepository() private tagRepository: TagRepository) {}
 
-  async getTagsByFilter(filter: ITagSearch): Promise<Tag[]> {
+  public async getTagsByFilter(filter: ITagSearch): Promise<Tag[]> {
     return await this.tagRepository.getByFilter(filter);
   }
 }

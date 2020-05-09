@@ -10,7 +10,7 @@ export default class NewspaperService {
     @OrmRepository() private newspaperRepository: NewspaperRepository
   ) {}
 
-  public async findByName(name: string): Promise<Newspaper> {
-    return await this.newspaperRepository.findByName(name);
+  public async findByTitle(title: string): Promise<Newspaper> {
+    return await this.newspaperRepository.findByTitle(title);
   }
 }

@@ -10,12 +10,12 @@ import { IArticleNew } from '../common/models/article';
 export default class ArticleService {
   constructor(@OrmRepository() private articleRepository: ArticleRepository) {}
 
-  async getArticles(): Promise<Article[]> {
-    return await this.articleRepository.getArticles();
+  async getAll(): Promise<Article[]> {
+    return await this.articleRepository.getAllArticles();
   }
 
-  async getArticleById(id: string): Promise<Article> {
-    return await this.articleRepository.getArticleById(id);
+  async findById(id: string): Promise<Article> {
+    return await this.articleRepository.findById(id);
   }
 
   async saveArticle(data: IArticleNew): Promise<string> {

@@ -8,10 +8,12 @@ export interface IArticleNew {
   id?: string;
   title: string;
   subtitle?: string;
-  body: string;
+  content: string;
   genre: GenreEnum;
+  likeCount: number;
+  commentCount: number;
   imageLink?: string;
-  author: IUser;
+  authors: IUser[];
   newspaper: INewspaper;
   tags?: ITag[];
 }

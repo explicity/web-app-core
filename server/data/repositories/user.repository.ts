@@ -12,7 +12,7 @@ export default class UserRepository extends BaseRepository<User> {
         'users.username',
         'users.firstName',
         'users.lastName',
-        'users.email',
+        'users.email'
       ])
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
@@ -24,7 +24,7 @@ export default class UserRepository extends BaseRepository<User> {
   public async findById(id: string): Promise<User> {
     return await this.createQueryBuilder('users')
       .where('users.id = :id', {
-        id,
+        id
       })
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
@@ -36,7 +36,7 @@ export default class UserRepository extends BaseRepository<User> {
   public async findByEmail(email: string): Promise<User> {
     return await this.createQueryBuilder('users')
       .where('users.email = :email', {
-        email,
+        email
       })
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
@@ -55,7 +55,7 @@ export default class UserRepository extends BaseRepository<User> {
   public async findByUsername(username: string): Promise<User> {
     return await this.createQueryBuilder('users')
       .where('users.username = :username', {
-        username,
+        username
       })
       .leftJoin('users.roles', 'role')
       .addSelect(['role.id', 'role.role'])
@@ -64,7 +64,7 @@ export default class UserRepository extends BaseRepository<User> {
       .getOne();
   }
 
-  public async addUser(user: any) {
+  public async createAndSave(user: any) {
     return await this.save(user);
   }
 }

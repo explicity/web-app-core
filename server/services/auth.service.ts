@@ -30,11 +30,11 @@ export default class AuthService {
 
   public async register({ password, ...userData }: IUserRegistration) {
     const defaultRole = await this.roleRepository.findByRole(RoleEnum.user);
-    const defaultNewspaper = await this.newspaperRepository.findByName(
+    const defaultNewspaper = await this.newspaperRepository.findByTitle(
       'New Kyiv Times'
     );
 
-    const newUser = await this.userRepository.addUser({
+    const newUser = await this.userRepository.createAndSave({
       id: uuidv4(),
       ...userData,
       password: await cryptoHelper.encrypt(password),
