@@ -8,21 +8,21 @@ import { IArticleNew } from '../../common/models/article';
 
 @EntityRepository(Article)
 export default class ArticleRepository extends BaseRepository<Article> {
-  async getArticles(): Promise<Article[]> {
+  public async getArticles(): Promise<Article[]> {
     return await this.find({
       relations: ['tags']
     });
   }
 
-  async getAuthorByUserId(id: string): Promise<Article> {
+  public async getArticlesByUserId(userId: string): Promise<Article[]> {
     return await this.createQueryBuilder('articles')
       .leftJoin('article.user', 'user')
-      .where('article."userId" = :id', { id })
+      .where('article."userId" = :userId', { userId })
       .andWhere('article.deletedAt is NULL')
-      .getOne();
+      .getMany();
   }
 
-  async createAndSave(article: IArticleNew): Promise<string> {
+  public async createAndSave(article: IArticleNew): Promise<string> {
     const entity = Object.assign(new Article(), article);
     entity.publicationDate = new Date();
     await this.save(entity);
@@ -30,7 +30,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
     return entity.id;
   }
 
-  async getArticleById(id: string): Promise<Article> {
+  public async getArticleById(id: string): Promise<Article> {
     const article = await this.findOne({
       where: { id }
     });
@@ -44,7 +44,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
     return article;
   }
 
-  async deleteArticle(article: string | Article) {
+  public async deleteArticle(article: string | Article) {
     if (typeof article !== 'string' && !ArticleRepository.isArticle(article)) {
       throw new Error('Supplied article object not an Article');
     }
@@ -54,7 +54,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
     );
   }
 
-  static isArticle(article: any): article is Article {
+  private static isArticle(article: any): article is Article {
     return (
       typeof article === 'object' &&
       typeof article.title === 'string' &&
@@ -63,7 +63,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
     );
   }
 
-  static isGenre(genre: any): genre is GenreEnum {
+  private static isGenre(genre: any): genre is GenreEnum {
     return (
       typeof genre === 'string' &&
       (genre === 'Beauty' || genre === 'School' || genre === 'Science')

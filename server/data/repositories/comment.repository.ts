@@ -5,7 +5,7 @@ import BaseRepository from './base.repository';
 
 @EntityRepository(Comment)
 export default class CommentRepository extends BaseRepository<Comment> {
-  async getByUserIdAndArticleId({
+  public async getByUserIdAndArticleId({
     userId,
     articleId
   }: {

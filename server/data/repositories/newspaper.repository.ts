@@ -5,9 +5,9 @@ import BaseRepository from './base.repository';
 
 @EntityRepository(Newspaper)
 export default class NewspaperRepository extends BaseRepository<Newspaper> {
-  public async findByName(name: string): Promise<Newspaper> {
+  public async findByTitle(title: string): Promise<Newspaper> {
     return await this.findOne({
-      where: { name },
+      where: { title },
     });
   }
 }
