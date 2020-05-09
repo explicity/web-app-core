@@ -16,7 +16,7 @@ import User from './User';
 export default class Newspaper extends AbstractEntity {
   @Index({ unique: true })
   @Column('text')
-  name: string;
+  title: string;
 
   @OneToMany(
     () => Article,

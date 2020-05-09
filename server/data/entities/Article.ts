@@ -29,7 +29,7 @@ export default class Article extends AbstractEntity {
   subtitle: string;
 
   @Column('text')
-  body: string;
+  content: string;
 
   @Column('date')
   publicationDate: Date;
@@ -43,12 +43,21 @@ export default class Article extends AbstractEntity {
   @Column('text', { nullable: true, default: null })
   imageLink: string;
 
-  @ManyToOne(
+  @Column('int', { default: 0 })
+  likeCount: number;
+
+  @Column('int', { default: 0 })
+  commentCount: number;
+
+  @ManyToMany(
     () => User,
     user => user.articles,
     { nullable: false }
   )
-  author: User;
+  @JoinTable({
+    name: 'article_authors'
+  })
+  authors: User[];
 
   @OneToOne(
     () => Annotation,

@@ -35,7 +35,7 @@ export default class User extends AbstractEntity {
   @Column('text', { select: false })
   password: string;
 
-  @OneToMany(() => Article, (article) => article.author, { nullable: true })
+  @ManyToMany(() => Article, (article) => article.authors, { nullable: true })
   articles: Article[];
 
   @ManyToMany(() => Newspaper, (newspaper) => newspaper.users, {
