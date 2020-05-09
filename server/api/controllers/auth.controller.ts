@@ -5,7 +5,7 @@ import {
   Post,
   Get,
   UseBefore,
-  Res,
+  Res
 } from 'routing-controllers';
 import { UnauthorizedError } from 'routing-controllers';
 
@@ -14,7 +14,7 @@ import UserService from '../../services/user.service';
 import { JWTMiddleware } from '../middlewares/authentication.middleware';
 
 import User from '../../data/entities/User';
-import { IUserRegistration } from '../../common/models/user';
+import { IUserRegistration, IUserLogin } from '../../common/models/user';
 import cryptoHelper from '../../common/utils/crypto.helper';
 
 @JsonController('/auth')
@@ -25,7 +25,9 @@ export class AuthController {
   ) {}
 
   @Post('/register')
-  async register(@Body() userDto: IUserRegistration) {
+  public async register(
+    @Body() userDto: IUserRegistration
+  ): Promise<IUserLogin> {
     const userByEmail: User = await this.userService.findByEmail(userDto.email);
 
     if (userByEmail) {
@@ -44,10 +46,10 @@ export class AuthController {
   }
 
   @Post('/login')
-  async login(
+  public async login(
     @BodyParam('email') email: string,
     @BodyParam('password') password: string
-  ) {
+  ): Promise<IUserLogin> {
     const user: User = await this.userService.findByEmailWithPassword(email);
     if (!user) {
       throw new UnauthorizedError('Incorrect email.');
@@ -66,7 +68,7 @@ export class AuthController {
 
   @Get('/user')
   @UseBefore(JWTMiddleware)
-  async getUser(@Res() res: any) {
+  public async getUser(@Res() res: any): Promise<User> {
     const { userId } = res.locals.jwtPayload.data;
 
     return await this.userService.findById(userId);

@@ -5,7 +5,11 @@ import uuidv4 from 'uuid/v4';
 import UserRepository from '../data/repositories/user.repository';
 import RoleRepository from '../data/repositories/role.repository';
 import NewspaperRepository from '../data/repositories/newspaper.repository';
-import { IShortUser, IUserRegistration } from '../common/models/user';
+import {
+  IShortUser,
+  IUserRegistration,
+  IUserLogin
+} from '../common/models/user';
 import { RoleEnum } from '../common/enums';
 
 import cryptoHelper from '../common/utils/crypto.helper';
@@ -18,17 +22,20 @@ export default class AuthService {
     @OrmRepository() private newspaperRepository: NewspaperRepository
   ) {}
 
-  public async login(user: IShortUser) {
+  public async login(user: IShortUser): Promise<IUserLogin> {
     return {
       token: tokenHelper.createToken({
         userId: user.id,
-        username: user.username,
+        username: user.username
       }),
-      user: await this.userRepository.findById(user.id),
+      user: await this.userRepository.findById(user.id)
     };
   }
 
-  public async register({ password, ...userData }: IUserRegistration) {
+  public async register({
+    password,
+    ...userData
+  }: IUserRegistration): Promise<IUserLogin> {
     const defaultRole = await this.roleRepository.findByRole(RoleEnum.user);
     const defaultNewspaper = await this.newspaperRepository.findByTitle(
       'New Kyiv Times'
@@ -39,7 +46,7 @@ export default class AuthService {
       ...userData,
       password: await cryptoHelper.encrypt(password),
       roles: [defaultRole],
-      newspapers: [defaultNewspaper],
+      newspapers: [defaultNewspaper]
     });
     return this.login(newUser);
   }

@@ -11,33 +11,33 @@ import {
 import ArticleService from '../../services/article.service';
 import { IArticleNew } from '../../common/models/article';
 import Article from '../../data/entities/Article';
-
+// TODO add result types for methods
 @JsonController('/articles')
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
   @Get('/')
-  public getArticles() {
-    return this.articleService.getArticles();
+  public async getArticles() {
+    return await this.articleService.getAll();
   }
 
   @Get('/:id')
-  public getArticle(@Param('id') id: string) {
-    return this.articleService.getArticleById(id);
+  public async getArticle(@Param('id') id: string) {
+    return await this.articleService.findById(id);
   }
 
   @Post('/')
-  public saveArticle(@Body() data: IArticleNew) {
-    return this.articleService.saveArticle(data);
+  public async saveArticle(@Body() data: IArticleNew) {
+    return await this.articleService.saveArticle(data);
   }
 
   @Put('/')
-  public updateArticle(@Body() data: Article) {
-    return this.articleService.updateArticle(data);
+  public async updateArticle(@Body() data: Article) {
+    return await this.articleService.updateArticle(data);
   }
 
   @Delete('/:id')
-  public deleteArticle(@Body() data: Article) {
-    return this.articleService.deleteArticle(data);
+  public async deleteArticle(@Body() data: Article) {
+    return await this.articleService.deleteArticle(data);
   }
 }

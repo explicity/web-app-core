@@ -10,23 +10,23 @@ import { IArticleNew } from '../common/models/article';
 export default class ArticleService {
   constructor(@OrmRepository() private articleRepository: ArticleRepository) {}
 
-  async getAll(): Promise<Article[]> {
+  public async getAll(): Promise<Article[]> {
     return await this.articleRepository.getAllArticles();
   }
 
-  async findById(id: string): Promise<Article> {
+  public async findById(id: string): Promise<Article> {
     return await this.articleRepository.findById(id);
   }
 
-  async saveArticle(data: IArticleNew): Promise<string> {
+  public async saveArticle(data: IArticleNew): Promise<string> {
     return await this.articleRepository.createAndSave(data);
   }
 
-  async updateArticle(data: Article): Promise<UpdateResult> {
+  public async updateArticle(data: Article): Promise<UpdateResult> {
     return await this.articleRepository.updateById(data.id, data);
   }
 
-  async deleteArticle(data: string | Article) {
+  public async deleteArticle(data: string | Article) {
     return await this.articleRepository.deleteArticle(data);
   }
 }
