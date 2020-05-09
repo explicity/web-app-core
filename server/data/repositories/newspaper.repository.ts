@@ -22,7 +22,7 @@ export default class NewspaperRepository extends BaseRepository<Newspaper> {
       .getOne();
   }
 
-  // TODO add joining tags
+  // TODO fix likes and comment counters
   public async getNewspaperArticles(newspaperId: string): Promise<Newspaper> {
     return await this.createQueryBuilder('newspapers')
       .select([
@@ -42,11 +42,14 @@ export default class NewspaperRepository extends BaseRepository<Newspaper> {
         'authors.id',
         'authors.firstName',
         'authors.lastName',
-        'authors.avatarImageLink'
+        'authors.avatarImageLink',
+        'tags.id',
+        'tags.keyword'
       ])
       .leftJoin('newspapers.articles', 'articles')
       .leftJoin('articles.annotation', 'annotation')
       .leftJoin('articles.authors', 'authors')
+      .leftJoin('articles.tags', 'tags')
       .where('newspapers.id = :newspaperId', { newspaperId })
       .getOne();
   }

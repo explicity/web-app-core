@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class initTables1589031956505 implements MigrationInterface {
-    name = 'initTables1589031956505'
+export class initTables1589038676115 implements MigrationInterface {
+    name = 'initTables1589038676115'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "article_reactions" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "isLiked" boolean NOT NULL DEFAULT true, "articleId" uuid NOT NULL, "userId" uuid NOT NULL, CONSTRAINT "UQ_c73d1aec06b48d4de2f99425cf1" UNIQUE ("userId", "articleId"), CONSTRAINT "PK_1e233223c5b3ca86885a69cfbd9" PRIMARY KEY ("id"))`, undefined);
@@ -11,7 +11,9 @@ export class initTables1589031956505 implements MigrationInterface {
         await queryRunner.query(`CREATE TYPE "roles_role_enum" AS ENUM('User', 'Admin', 'Guest')`, undefined);
         await queryRunner.query(`CREATE TABLE "roles" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "role" "roles_role_enum" NOT NULL DEFAULT 'Guest', "description" text, CONSTRAINT "PK_c1433d71a4838793a49dcad46ab" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_ccc7c1489f3a6b3c9b47d4537c" ON "roles" ("role") `, undefined);
-        await queryRunner.query(`CREATE TABLE "users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "firstName" text, "lastName" text, "username" text NOT NULL, "email" text NOT NULL, "emailConfirmed" boolean NOT NULL DEFAULT false, "password" text NOT NULL, CONSTRAINT "UQ_fe0bb3f6520ee0469504521e710" UNIQUE ("username"), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`, undefined);
+        await queryRunner.query(`CREATE TABLE "comments" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "articleId" uuid NOT NULL, "userId" uuid NOT NULL, "body" text NOT NULL, CONSTRAINT "PK_8bf68bc960f2b69e818bdb90dcb" PRIMARY KEY ("id"))`, undefined);
+        await queryRunner.query(`CREATE UNIQUE INDEX "IDX_b0011304ebfcb97f597eae6c31" ON "comments" ("articleId") `, undefined);
+        await queryRunner.query(`CREATE TABLE "users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "firstName" text, "lastName" text, "username" text NOT NULL, "email" text NOT NULL, "emailConfirmed" boolean NOT NULL DEFAULT false, "password" text NOT NULL, "avatarImageLink" text DEFAULT null, CONSTRAINT "UQ_fe0bb3f6520ee0469504521e710" UNIQUE ("username"), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_5372672fbfd1677205e0ce3ece" ON "users" ("firstName") `, undefined);
         await queryRunner.query(`CREATE TABLE "newspapers" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "title" text NOT NULL, CONSTRAINT "PK_617c33c3772b6f187161277b6f9" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_de7206fa527ef16fa0ef0f690a" ON "newspapers" ("title") `, undefined);
@@ -22,8 +24,6 @@ export class initTables1589031956505 implements MigrationInterface {
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_3c28437db9b5137136e1f6d609" ON "articles" ("title") `, undefined);
         await queryRunner.query(`CREATE TABLE "annotations" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "title" text NOT NULL, "body" text, CONSTRAINT "PK_d5b59b40ef7ee54b4309c2e89b2" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE UNIQUE INDEX "IDX_2107b249bdb54f4314267a9bd7" ON "annotations" ("title") `, undefined);
-        await queryRunner.query(`CREATE TABLE "comments" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "articleId" uuid NOT NULL, "userId" uuid NOT NULL, "body" text NOT NULL, CONSTRAINT "PK_8bf68bc960f2b69e818bdb90dcb" PRIMARY KEY ("id"))`, undefined);
-        await queryRunner.query(`CREATE UNIQUE INDEX "IDX_b0011304ebfcb97f597eae6c31" ON "comments" ("articleId") `, undefined);
         await queryRunner.query(`CREATE TABLE "permissions_to_roles" ("rolesId" uuid NOT NULL, "permissionsId" uuid NOT NULL, CONSTRAINT "PK_a53f70181b004198caf3ba34c98" PRIMARY KEY ("rolesId", "permissionsId"))`, undefined);
         await queryRunner.query(`CREATE INDEX "IDX_c1c358ed732dc83839ca98a770" ON "permissions_to_roles" ("rolesId") `, undefined);
         await queryRunner.query(`CREATE INDEX "IDX_671ed5cde3611a2ca9d638caf7" ON "permissions_to_roles" ("permissionsId") `, undefined);
@@ -44,10 +44,10 @@ export class initTables1589031956505 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_ab2929ab48ecedb624e30b2649" ON "article_tags" ("tagsId") `, undefined);
         await queryRunner.query(`ALTER TABLE "article_reactions" ADD CONSTRAINT "FK_4adb4808cbe21bd8b2e878031d8" FOREIGN KEY ("articleId") REFERENCES "articles"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
         await queryRunner.query(`ALTER TABLE "article_reactions" ADD CONSTRAINT "FK_a86dc904885bd3312cf039c6f54" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
-        await queryRunner.query(`ALTER TABLE "tags" ADD CONSTRAINT "FK_9f9590cc11561f1f48ff034ef99" FOREIGN KEY ("parentId") REFERENCES "tags"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
-        await queryRunner.query(`ALTER TABLE "articles" ADD CONSTRAINT "FK_4d62ac02c687dd8b275155102fe" FOREIGN KEY ("annotationId") REFERENCES "annotations"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
         await queryRunner.query(`ALTER TABLE "comments" ADD CONSTRAINT "FK_b0011304ebfcb97f597eae6c31f" FOREIGN KEY ("articleId") REFERENCES "articles"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
         await queryRunner.query(`ALTER TABLE "comments" ADD CONSTRAINT "FK_7e8d7c49f218ebb14314fdb3749" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
+        await queryRunner.query(`ALTER TABLE "tags" ADD CONSTRAINT "FK_9f9590cc11561f1f48ff034ef99" FOREIGN KEY ("parentId") REFERENCES "tags"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
+        await queryRunner.query(`ALTER TABLE "articles" ADD CONSTRAINT "FK_4d62ac02c687dd8b275155102fe" FOREIGN KEY ("annotationId") REFERENCES "annotations"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
         await queryRunner.query(`ALTER TABLE "permissions_to_roles" ADD CONSTRAINT "FK_c1c358ed732dc83839ca98a7707" FOREIGN KEY ("rolesId") REFERENCES "roles"("id") ON DELETE CASCADE ON UPDATE NO ACTION`, undefined);
         await queryRunner.query(`ALTER TABLE "permissions_to_roles" ADD CONSTRAINT "FK_671ed5cde3611a2ca9d638caf77" FOREIGN KEY ("permissionsId") REFERENCES "permissions"("id") ON DELETE CASCADE ON UPDATE NO ACTION`, undefined);
         await queryRunner.query(`ALTER TABLE "roles_to_users" ADD CONSTRAINT "FK_7408026eaaa7bea0119a28a4493" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`, undefined);
@@ -75,10 +75,10 @@ export class initTables1589031956505 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "roles_to_users" DROP CONSTRAINT "FK_7408026eaaa7bea0119a28a4493"`, undefined);
         await queryRunner.query(`ALTER TABLE "permissions_to_roles" DROP CONSTRAINT "FK_671ed5cde3611a2ca9d638caf77"`, undefined);
         await queryRunner.query(`ALTER TABLE "permissions_to_roles" DROP CONSTRAINT "FK_c1c358ed732dc83839ca98a7707"`, undefined);
-        await queryRunner.query(`ALTER TABLE "comments" DROP CONSTRAINT "FK_7e8d7c49f218ebb14314fdb3749"`, undefined);
-        await queryRunner.query(`ALTER TABLE "comments" DROP CONSTRAINT "FK_b0011304ebfcb97f597eae6c31f"`, undefined);
         await queryRunner.query(`ALTER TABLE "articles" DROP CONSTRAINT "FK_4d62ac02c687dd8b275155102fe"`, undefined);
         await queryRunner.query(`ALTER TABLE "tags" DROP CONSTRAINT "FK_9f9590cc11561f1f48ff034ef99"`, undefined);
+        await queryRunner.query(`ALTER TABLE "comments" DROP CONSTRAINT "FK_7e8d7c49f218ebb14314fdb3749"`, undefined);
+        await queryRunner.query(`ALTER TABLE "comments" DROP CONSTRAINT "FK_b0011304ebfcb97f597eae6c31f"`, undefined);
         await queryRunner.query(`ALTER TABLE "article_reactions" DROP CONSTRAINT "FK_a86dc904885bd3312cf039c6f54"`, undefined);
         await queryRunner.query(`ALTER TABLE "article_reactions" DROP CONSTRAINT "FK_4adb4808cbe21bd8b2e878031d8"`, undefined);
         await queryRunner.query(`DROP INDEX "IDX_ab2929ab48ecedb624e30b2649"`, undefined);
@@ -99,8 +99,6 @@ export class initTables1589031956505 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "IDX_671ed5cde3611a2ca9d638caf7"`, undefined);
         await queryRunner.query(`DROP INDEX "IDX_c1c358ed732dc83839ca98a770"`, undefined);
         await queryRunner.query(`DROP TABLE "permissions_to_roles"`, undefined);
-        await queryRunner.query(`DROP INDEX "IDX_b0011304ebfcb97f597eae6c31"`, undefined);
-        await queryRunner.query(`DROP TABLE "comments"`, undefined);
         await queryRunner.query(`DROP INDEX "IDX_2107b249bdb54f4314267a9bd7"`, undefined);
         await queryRunner.query(`DROP TABLE "annotations"`, undefined);
         await queryRunner.query(`DROP INDEX "IDX_3c28437db9b5137136e1f6d609"`, undefined);
@@ -112,6 +110,8 @@ export class initTables1589031956505 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "newspapers"`, undefined);
         await queryRunner.query(`DROP INDEX "IDX_5372672fbfd1677205e0ce3ece"`, undefined);
         await queryRunner.query(`DROP TABLE "users"`, undefined);
+        await queryRunner.query(`DROP INDEX "IDX_b0011304ebfcb97f597eae6c31"`, undefined);
+        await queryRunner.query(`DROP TABLE "comments"`, undefined);
         await queryRunner.query(`DROP INDEX "IDX_ccc7c1489f3a6b3c9b47d4537c"`, undefined);
         await queryRunner.query(`DROP TABLE "roles"`, undefined);
         await queryRunner.query(`DROP TYPE "roles_role_enum"`, undefined);

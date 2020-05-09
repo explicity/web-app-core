@@ -16,12 +16,12 @@ export default class ArticleRepository extends BaseRepository<Article> {
 
   public async findByNewspaperId(newspaperId: string): Promise<Article[]> {
     return await this.createQueryBuilder('articles')
-      .leftJoin('article.newspaper', 'newspaper')
-      .where('article."newspaperId" = :newspaperId', { newspaperId })
-      .andWhere('article.deletedAt is NULL')
+      .leftJoin('articles.newspapers', 'newspaper')
+      .where('articles."newspaperId" = :newspaperId', { newspaperId })
       .getMany();
   }
 
+  // TODO fix tag joining
   public async findByNewspaperIdAndArticleId({
     newspaperId,
     articleId
@@ -33,6 +33,9 @@ export default class ArticleRepository extends BaseRepository<Article> {
       .leftJoin('articles.newspapers', 'newspaper')
       .leftJoinAndSelect('articles.annotation', 'annotation')
       .leftJoinAndSelect('articles.authors', 'authors')
+      .leftJoinAndSelect('articles.articleReaction', 'articleReaction')
+      .leftJoinAndSelect('articles.comments', 'comments')
+      .leftJoinAndSelect('articles.tags', 'tags')
       .where('articles.id = :articleId AND newspaper.id = :newspaperId', {
         articleId,
         newspaperId

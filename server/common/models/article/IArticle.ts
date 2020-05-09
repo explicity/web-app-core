@@ -5,6 +5,7 @@ import { INewspaper } from '../newspaper';
 import { ITag } from '../tag';
 import { IArticleReaction } from '../article-reaction';
 import { IAnnotation } from '../annotation';
+import { IComment } from '../comment';
 
 export interface IArticle {
   id?: string;
@@ -21,4 +22,5 @@ export interface IArticle {
   annotation: IAnnotation;
   tags?: ITag[];
   articleReaction?: IArticleReaction[];
+  comments?: IComment[];
 }

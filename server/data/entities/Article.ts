@@ -17,6 +17,7 @@ import User from './User';
 import Annotation from './Annotation';
 import Tag from './Tag';
 import ArticleReaction from './ArticleReaction';
+import Comment from './Comment';
 
 @Entity('articles')
 export default class Article extends AbstractEntity {
@@ -81,7 +82,7 @@ export default class Article extends AbstractEntity {
   @JoinTable({
     name: 'article_tags'
   })
-  tags: Promise<Tag[]>;
+  tags: Tag[];
 
   @OneToMany(
     () => ArticleReaction,
@@ -89,4 +90,12 @@ export default class Article extends AbstractEntity {
     { nullable: true }
   )
   articleReaction: ArticleReaction[];
+
+
+  @OneToMany(
+    () => Comment,
+    comment => comment.article,
+    { nullable: true }
+  )
+  comments: Comment[];
 }
