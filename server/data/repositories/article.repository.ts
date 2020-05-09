@@ -21,7 +21,6 @@ export default class ArticleRepository extends BaseRepository<Article> {
       .getMany();
   }
 
-  // TODO fix tag joining
   public async findByNewspaperIdAndArticleId({
     newspaperId,
     articleId
