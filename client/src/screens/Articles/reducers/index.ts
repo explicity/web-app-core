@@ -3,10 +3,10 @@ import { combineReducers } from 'redux';
 import { reducerCreator } from 'helpers/reducer.helper';
 
 import articles from '../containers/ArticlesGridView/reducer';
-import { fetchArticles } from '../routines';
+import { fetchNewspaperArticles } from '../routines';
 
 const requests = combineReducers({
-  articles: reducerCreator([fetchArticles.TRIGGER])
+  articles: reducerCreator([fetchNewspaperArticles.TRIGGER])
 });
 
 export default combineReducers({ articles, requests });

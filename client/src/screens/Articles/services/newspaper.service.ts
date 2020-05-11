@@ -2,11 +2,13 @@ import callWebApi from 'helpers/webApi.helper';
 
 import { IArticle } from '../models/article';
 
-export const getArticles = async (): Promise<IArticle[]> => {
+export const getNewspaperArticles = async ({
+  newspaperId
+}): Promise<IArticle[]> => {
   const response = await callWebApi({
-    endpoint: `/articles`,
+    endpoint: `/newspapers/${newspaperId}/articles`,
     type: 'GET'
   });
-  
+
   return response.json();
 };

@@ -5,7 +5,7 @@ import ArticlesGridView from 'screens/Articles/containers/ArticlesGridView';
 export interface IArticlesMenuProps {}
 interface IArticlesMenuState {}
 
-class ArticlesMenu extends React.Component<
+class ArticlesMenu extends React.PureComponent<
   IArticlesMenuProps,
   IArticlesMenuState
 > {
