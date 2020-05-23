@@ -42,7 +42,7 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
 
   return (
     <Switch>
-      <LoaderWrapper loading={isLoading || (tokenValue && !isAuthorized)}>
+      <LoaderWrapper loading={isLoading}>
         <Switch>
           <Route exact path='/login' component={renderLogin} />
           <Route exact path='/register' component={renderRegistration} />

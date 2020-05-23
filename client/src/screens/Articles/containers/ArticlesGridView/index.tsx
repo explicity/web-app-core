@@ -45,7 +45,7 @@ class ArticlesGridView extends React.Component<
       <LoaderWrapper loading={loading}>
         <Box
           pad='medium'
-          background={{ color: '#2E2D30' }}
+          background={{ color: '#fff' }}
           className={styles.wrapper}
         >
           <Box flex direction='row-responsive' wrap>
