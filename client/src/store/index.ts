@@ -7,7 +7,7 @@ import rootReducer from 'reducers';
 import rootSaga from 'sagas';
 
 const sagaMiddleware = createSagaMiddleware();
-const loggerMiddleware = createLogger();
+const loggerMiddleware = createLogger({ collapsed: true });
 
 const middlewares = [sagaMiddleware, loggerMiddleware];
 

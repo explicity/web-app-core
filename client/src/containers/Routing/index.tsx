@@ -8,7 +8,6 @@ import RegisterPage from 'screens/Login/containers/RegisterPage';
 
 import LoaderWrapper from 'components/LoaderWrapper';
 import PrivateRoute from 'components/PrivateRoute';
-import { authService } from '../../screens/Login/services/auth.service';
 import { Role } from 'screens/Login/models/role';
 import { IBindingAction } from 'models/callback';
 import { IGlobalState } from 'models/global-state';
@@ -37,8 +36,6 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
   const renderRegistration = regProps => (
     <RegisterPage {...regProps} isAuthorized={isAuthorized} />
   );
-
-  const { tokenValue }: { tokenValue: string } = authService;
 
   return (
     <Switch>

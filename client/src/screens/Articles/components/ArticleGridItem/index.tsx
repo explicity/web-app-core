@@ -25,7 +25,7 @@ const ArticleGridItem = ({ item }) => {
               {item.title}
             </Heading>
             {item.subtitle && (
-              <Heading level='4' className={styles.cardTitle}>
+              <Heading level='4' className={styles.cardSubtitle}>
                 {item.subtitle}
               </Heading>
             )}

@@ -60,6 +60,7 @@
 }
 
 :local(.cardTitle) {
+  font-size: 25px !important;
   color: hsla(0, 0%, 100%, 0.87);
   font-family: 'Roboto', sans-serif;
 }
@@ -74,8 +75,8 @@
 
 :local(.cardFooterButton) {
   font-size: 17px !important;
- color: hsla(0, 0%, 100%, 0.5) !important;
- transition: 0.3s ease;
+  color: hsla(0, 0%, 100%, 0.5) !important;
+  transition: 0.3s ease;
 }
 
 :local(.cardFooterButtonIcon) {

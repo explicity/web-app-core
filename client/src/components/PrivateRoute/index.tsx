@@ -10,18 +10,20 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => (
     render={props => {
       const { tokenValue }: { tokenValue: string } = authService;
 
-      if (!tokenValue) {
+      if (!tokenValue || !rest.isAuthorized) {
         return (
           <Redirect
             to={{ pathname: '/login', state: { from: props.location } }}
           />
         );
       }
+
       if (
-        rest.currentUser &&
+        rest.user &&
         roles &&
-        !roles.filter((value: string) => rest.currentUser.roles.includes(value))
-          .length
+        !roles.filter((value: string) =>
+          rest.user.roles.some(item => item.role === value)
+        ).length
       ) {
         return <Redirect to={{ pathname: '/404' }} />;
       }
@@ -30,8 +32,13 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => (
   />
 );
 
-const mapToStateProps = (state: any) => ({
-  currentUser: state.user
-});
+const mapToStateProps = (state: any) => {
+  const { isAuthorized, user } = state.user.profile;
 
-export default connect(null, mapToStateProps)(PrivateRoute);
+  return {
+    isAuthorized,
+    user
+  };
+};
+
+export default connect(mapToStateProps, null)(PrivateRoute);
