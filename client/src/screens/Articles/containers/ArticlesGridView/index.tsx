@@ -32,6 +32,7 @@ class ArticlesGridView extends React.Component<
     this.bindData();
   }
 
+  // TODO fix saving current newspaper
   @boundMethod
   bindData() {
     const { fetchNewspaperArticles, user } = this.props;
@@ -39,7 +40,7 @@ class ArticlesGridView extends React.Component<
   }
 
   render() {
-    const { loading, articles } = this.props;
+    const { loading, articles, user } = this.props;
 
     return (
       <LoaderWrapper loading={loading}>
@@ -50,7 +51,11 @@ class ArticlesGridView extends React.Component<
         >
           <Box flex direction='row-responsive' wrap>
             {map(articles, item => (
-              <ArticleGridItem item={item} key={item.id} />
+              <ArticleGridItem
+                item={item}
+                key={item.id}
+                newspaper={user.newspapers[0]}
+              />
             ))}
           </Box>
         </Box>

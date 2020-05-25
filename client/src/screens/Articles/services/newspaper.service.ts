@@ -12,3 +12,15 @@ export const getNewspaperArticles = async ({
 
   return response.json();
 };
+
+export const getExtendedNewspaperArticle = async ({
+  newspaperId,
+  articleId
+}) => {
+  const response = await callWebApi({
+    endpoint: `/newspapers/${newspaperId}/articles/${articleId}`,
+    type: 'GET'
+  });
+
+  return response.json();
+};

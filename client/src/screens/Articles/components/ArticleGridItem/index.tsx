@@ -5,11 +5,11 @@ import { Favorite, Chat } from 'grommet-icons';
 
 import styles from './styles.module.scss';
 
-const ArticleGridItem = ({ item }) => {
+const ArticleGridItem = ({ item, newspaper }) => {
   return (
     <Box margin='small' className={styles.cardOuter}>
       <Box className={styles.card}>
-        <Link to={`/article/${item.id}`}>
+        <Link to={`/newspapers/${newspaper.id}/articles/${item.id}`}>
           <Box className={styles.cardImageOuter}>
             {item.imageLink && (
               <Image className={styles.cardImage} src={item.imageLink} />

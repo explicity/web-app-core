@@ -52,7 +52,7 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
           />
           <PrivateRoute
             exact
-            path='/article/:id'
+            path='/newspapers/:newspaperId/articles/:articleId'
             roles={[Role.User, Role.Admin]}
             component={ArticleView}
           />

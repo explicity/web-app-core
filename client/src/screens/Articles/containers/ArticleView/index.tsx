@@ -4,13 +4,14 @@ import { boundMethod } from 'autobind-decorator';
 import { RouteComponentProps } from 'react-router';
 
 import LoaderWrapper from 'components/LoaderWrapper';
-import { IGlobalState } from 'models/global-state';
 import { IBindingCallback1 } from 'models/callback';
 
+import { getExtendedArticle } from '../../selectors';
 import { fetchExtendedNewspaperArticle } from '../../routines';
 
 interface MatchParams {
-  id: string;
+  newspaperId: string;
+  articleId: string;
 }
 
 export interface IArticleViewProps extends RouteComponentProps<MatchParams> {
@@ -18,7 +19,9 @@ export interface IArticleViewProps extends RouteComponentProps<MatchParams> {
     newspaperId: string;
     articleId: string;
   }>;
-  user: any;
+  loading: boolean;
+  error: object | string | null;
+  article: any
 }
 interface IArticleViewState {}
 
@@ -33,23 +36,26 @@ class ArticleView extends React.Component<
   @boundMethod
   bindData() {
     const {
-      user,
       match: { params },
       fetchExtendedNewspaperArticle
     } = this.props;
 
     fetchExtendedNewspaperArticle({
-      newspaperId: user.newspapers[0].id,
-      articleId: params.id
+      newspaperId: params.newspaperId,
+      articleId: params.articleId
     });
   }
 
   render() {
+    console.log(this.props.article);
     return <div></div>;
   }
 }
 
-const mapStateToProps = (state: IGlobalState) => {
+const mapStateToProps = (state, props) => {
+  const { articleId } = props.match.params;
+
+  const { loading, error } = state.article.requests.extendedArticle;
   const {
     user: {
       profile: { user }
@@ -57,7 +63,9 @@ const mapStateToProps = (state: IGlobalState) => {
   } = state;
 
   return {
-    user
+    loading,
+    error,
+    article: getExtendedArticle(state, articleId)
   };
 };
 

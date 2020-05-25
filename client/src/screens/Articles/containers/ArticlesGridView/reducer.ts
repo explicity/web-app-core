@@ -1,34 +1,50 @@
 import { Routine } from 'redux-saga-routines';
 import { combineReducers } from 'redux';
-import uniq from 'lodash/uniq';
+import { uniq, merge } from 'lodash';
 
-import { fetchNewspaperArticles } from '../../routines';
+import {
+  fetchNewspaperArticles,
+  fetchExtendedNewspaperArticle
+} from '../../routines';
 
-const articlesById = (state = {}, action: Routine<any>) => {
+const byId = (state = {}, action: Routine<any>) => {
   switch (action.type) {
-    case fetchNewspaperArticles.SUCCESS:
+    case fetchNewspaperArticles.SUCCESS: {
+      if (action.payload.response) {
+        return merge({}, state, action.payload.response.entities.articles);
+      }
+      return state;
+    }
+    case fetchExtendedNewspaperArticle.SUCCESS: {
+      const { id, article } = action.payload;
+
       return {
         ...state,
-        ...action.payload.response.entities.articles
+        [id]: {
+          ...state[id],
+          ...article
+        }
       };
-
+    }
     default:
       return state;
   }
 };
 
-const allArticlesIds = (state = [], action: Routine<any>) => {
+const allIds = (state = [], action: Routine<any>) => {
   switch (action.type) {
     case fetchNewspaperArticles.SUCCESS:
       return uniq([...state, ...action.payload.response.result]);
+    case fetchExtendedNewspaperArticle.SUCCESS:
+      return uniq([...state, action.payload.id]);
     default:
       return state;
   }
 };
 
 const articles = combineReducers({
-  byId: articlesById,
-  allIds: allArticlesIds
+  byId,
+  allIds
 });
 
 export default articles;

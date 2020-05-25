@@ -21,7 +21,7 @@ function* fetchNewspaperArticlesRequest({ payload }: AnyAction) {
     );
   } catch (error) {
     yield put(
-      fetchNewspaperArticles.failure(error.message || 'Something went wrong!')
+      fetchNewspaperArticles.failure(error.message || 'Something went wrong! Please try again.')
     );
   }
 }
