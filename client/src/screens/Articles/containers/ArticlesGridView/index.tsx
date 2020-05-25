@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { boundMethod } from 'autobind-decorator';
-import { Box, Grid } from 'grommet';
+import { Box } from 'grommet';
 import map from 'lodash/map';
 
 import LoaderWrapper from 'components/LoaderWrapper';

@@ -9,7 +9,7 @@ const ArticleGridItem = ({ item }) => {
   return (
     <Box margin='small' className={styles.cardOuter}>
       <Box className={styles.card}>
-        <Link to={`/${item.id}`}>
+        <Link to={`/article/${item.id}`}>
           <Box className={styles.cardImageOuter}>
             {item.imageLink && (
               <Image className={styles.cardImage} src={item.imageLink} />
