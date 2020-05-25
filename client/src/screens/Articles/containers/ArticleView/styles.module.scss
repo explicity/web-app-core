@@ -1,0 +1,112 @@
+:local(.screen) {
+  height: 100vh;
+  min-height: 100vh;
+}
+
+:local(.container) {
+  background-color: #fff;
+  border-radius: 5px;
+  border: 2px solid #ADADAD;
+  padding: 40px;
+}
+
+:local(.headerOuter) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :local(.headerGenreOuter) {
+    padding: 0 10px;
+    border: 1px solid #B9BBBA;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+
+    :local(.headerGenre) {
+      font-size: 10.5px !important;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: rgb(95, 94, 94);
+      letter-spacing: 0.2px;
+    }
+  }
+}
+
+:local(.headerTitleOuter) {
+  margin-bottom: 30px;
+
+  :local(.headerTitle) {
+    font-size: 50px !important;
+    color: #414043;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+:local(.headerInfoOuter) {
+  :local(.publicationDate) {
+    font-size: 14px !important;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #C2C4C3;
+
+    :local(.publicationDateIcon) {
+      margin-right: 4px;
+      fill: #C2C4C3;
+      stroke: #C2C4C3;
+      align-self: center;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  :local(.interactionsOuter) {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+
+    :local(.interaction) {
+      display: flex;
+      font-size: 14px !important;
+      color: #C2C4C3;
+
+
+    &:first-child {
+      margin-right: 10px;
+    }
+
+      :local(.interactionIcon) {
+        margin-right: 4px;
+        fill: #C2C4C3;
+        stroke: #C2C4C3;
+        align-self: center;
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  :local(.shareButton) {
+    font-size: 14px;
+    font-style: italic;
+    width: 125px;
+    color: #C2C4C3;
+    border: 1px solid #C2C4C3;
+    border-radius: 20px;
+    padding: 1px 20px;
+
+    :local(.shareButtonIcon) {
+      fill: #C2C4C3;
+      stroke: #C2C4C3;
+      align-self: center;
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
