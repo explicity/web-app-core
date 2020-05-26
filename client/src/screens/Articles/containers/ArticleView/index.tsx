@@ -2,8 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { boundMethod } from 'autobind-decorator';
 import { RouteComponentProps } from 'react-router';
-import { Heading, Box, Button, Text, Grid } from 'grommet';
-import { Favorite, Chat, Share, Clock } from 'grommet-icons';
+import {
+  Heading,
+  Box,
+  Button,
+  Text,
+  Grid,
+  Image,
+  Anchor,
+  Paragraph
+} from 'grommet';
+import {
+  Favorite,
+  Chat,
+  Share,
+  Clock,
+  Twitter,
+  FacebookOption,
+  Instagram
+} from 'grommet-icons';
 import moment from 'moment';
 
 import LoaderWrapper from 'components/LoaderWrapper';
@@ -53,12 +70,13 @@ class ArticleView extends React.Component<
 
   render() {
     const { loading, article } = this.props;
+    console.log('article', article);
 
     return (
       <LoaderWrapper loading={loading}>
         {article && (
           <Box background='#2E2D30' className={styles.screen}>
-            <Box className={styles.container} margin='large' elevation='small'>
+            <Box className={styles.container} margin='large'>
               <Box className={styles.headerOuter}>
                 <Box className={styles.headerGenreOuter}>
                   <Text className={styles.headerGenre}>{article.genre}</Text>
@@ -99,6 +117,76 @@ class ArticleView extends React.Component<
                     label='Share'
                     className={`${styles.button} ${styles.shareButton}`}
                   />
+                </Grid>
+              </Box>
+
+              <Box className={styles.contentOuter}>
+                <Grid
+                  className={styles.headerInfoOuter}
+                  columns={['1/4', '3/4']}
+                  gap='xxsmall'
+                >
+                  <Box className={styles.authorGridOuter}>
+                    <Box className={styles.authorOuter}>
+                      <Box className={styles.authorWrapper}>
+                        <Box className={styles.authorImageOuter}>
+                          {article.authors[0].avatarImageLink && (
+                            <Image
+                              className={styles.avatarImage}
+                              src={article.authors[0].avatarImageLink}
+                            />
+                          )}
+                        </Box>
+                        <Box className={styles.authorContentOuter}>
+                          <Heading level='5' className={styles.authorName}>
+                            {`${article.authors[0].firstName} ${article.authors[0].lastName}`}
+                          </Heading>
+                          <Text className={styles.authorEmail}>
+                            {article.authors[0].email}
+                          </Text>
+                        </Box>
+                      </Box>
+                      <Box className={styles.authorInteractionsOuter}>
+                        <Anchor
+                          icon={
+                            <FacebookOption
+                              className={styles.authorInteractionIcon}
+                            />
+                          }
+                          href='#'
+                          className={styles.authorInteraction}
+                        />
+                        <Anchor
+                          icon={
+                            <Twitter className={styles.authorInteractionIcon} />
+                          }
+                          href='#'
+                          className={styles.authorInteraction}
+                        />
+                        <Anchor
+                          icon={
+                            <Instagram
+                              className={styles.authorInteractionIcon}
+                            />
+                          }
+                          href='#'
+                          className={styles.authorInteraction}
+                        />
+                      </Box>
+                      <Box className={styles.authorPostsButtonOuter}>
+                        <Button
+                          plain
+                          label='All Posts'
+                          className={styles.authorPostsButton}
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box className={styles.contentGridOuter}>
+                    <Text className={styles.contentText}>
+                      {article.content}
+                    </Text>
+                  </Box>
                 </Grid>
               </Box>
             </Box>

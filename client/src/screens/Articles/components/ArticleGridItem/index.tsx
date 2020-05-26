@@ -24,11 +24,11 @@ const ArticleGridItem = ({ item, newspaper }) => {
             <Heading level='3' className={styles.cardTitle}>
               {item.title}
             </Heading>
-            {item.subtitle && (
+            {/* {item.subtitle && (
               <Heading level='4' className={styles.cardSubtitle}>
                 {item.subtitle}
               </Heading>
-            )}
+            )} */}
           </Box>
           {/* {item.tags && (
           <Box className={styles.cardTagsOuter}>

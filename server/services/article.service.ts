@@ -30,7 +30,7 @@ export default class ArticleService {
     return await this.articleRepository.updateById(data.id, data);
   }
 
-  public async deleteArticle(data: string | Article) {
-    return await this.articleRepository.deleteArticle(data);
+  public async deleteArticle(id: string) {
+    return await this.articleRepository.deleteArticle(id);
   }
 }

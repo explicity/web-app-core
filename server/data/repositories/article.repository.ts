@@ -64,14 +64,8 @@ export default class ArticleRepository extends BaseRepository<Article> {
     return article;
   }
 
-  public async deleteArticle(article: string | Article) {
-    if (typeof article !== 'string' && !ArticleRepository.isArticle(article)) {
-      throw new Error('Supplied article object not an Article');
-    }
-    await this.manager.delete(
-      Article,
-      typeof article === 'string' ? article : article.id
-    );
+  public async deleteArticle(id: string) {
+    await this.manager.delete(Article, id);
   }
 
   private static isArticle(article: any): article is Article {

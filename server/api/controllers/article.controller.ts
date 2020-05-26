@@ -38,7 +38,7 @@ export class ArticleController {
   }
 
   @Delete('/:id')
-  public async deleteArticle(@Body() data: Article): Promise<void> {
-    return await this.articleService.deleteArticle(data);
+  public async deleteArticle(@Param('id') id: string): Promise<void> {
+    return await this.articleService.deleteArticle(id);
   }
 }

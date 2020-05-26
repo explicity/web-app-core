@@ -1,19 +1,19 @@
 :local(.screen) {
-  height: 100vh;
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
 
 :local(.container) {
   background-color: #fff;
   border-radius: 5px;
   border: 2px solid #ADADAD;
-  padding: 40px;
 }
 
 :local(.headerOuter) {
+  margin: 40px 60px 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 40px;
 
   :local(.headerGenreOuter) {
     padding: 0 10px;
@@ -35,11 +35,20 @@
 }
 
 :local(.headerTitleOuter) {
+  text-align: center;
   margin-bottom: 30px;
 
   :local(.headerTitle) {
     font-size: 50px !important;
     color: #414043;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 10px;
+  }
+
+  :local(.headerSubtitle) {
+    font-size: 25px !important;
+    color: #8A8D91;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
   }
@@ -110,3 +119,109 @@
   }
 }
 
+
+
+:local(.contentOuter) {
+  margin: 0 50px 40px;
+
+  :local(.authorOuter) {
+    border-radius: 3px;
+    border: 1px solid rgb(231, 229, 229);
+  }
+
+  :local(.contentGridOuter) {
+    margin-left: 25px;
+  }
+
+  :local(.contentText) {
+    font-size: 16px !important;
+    color: rgb(153, 158, 161);
+  }
+}
+
+:local(.authorGridOuter) {
+  margin-top: 50px;
+}
+
+:local(.authorOuter) {
+  align-items: center;
+
+  :local(.authorWrapper) {
+    padding: 25px 5px 0;
+    align-items: center;
+  }
+
+  :local(.authorImageOuter) {
+    width: 100px;
+    height: 100px;
+    background-color: #db9200;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+
+    :local(.avatarImage) {
+      width: 100px;
+      object-fit: cover;
+    }
+  }
+
+
+  :local(.authorContentOuter) {
+    text-align: center;
+    margin-bottom: 25px;
+
+    :local(.authorName) {
+      color: #414043;
+      font-weight: bold;
+      letter-spacing: 0.3px;
+      line-height: 14px;
+    }
+
+    :local(.authorEmail) {
+      font-size: 13px !important;
+      color: #ADADAD;
+      font-weight: bold;
+    }
+  }
+
+  :local(.authorInteractionsOuter) {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-top: 1px solid rgb(231, 229, 229);
+
+    :local(.authorInteraction) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      &:not(:last-child) {
+        border-right: 1px solid rgb(231, 229, 229);
+      }
+
+      :local(.authorInteractionIcon) {
+        width: 17px;
+        height: 17px;
+        fill: #414043;
+        stroke: #414043;
+      }
+    }
+  }
+
+  :local(.authorPostsButtonOuter) {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid rgb(231, 229, 229);
+
+    :local(.authorPostsButton) {
+      font-size: 11px;
+      font-weight: bold;
+      color: #414043;
+      text-transform: uppercase;
+      padding: 7px 15px;
+    }
+  }
+}
