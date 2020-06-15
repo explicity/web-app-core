@@ -5,7 +5,14 @@ import { Favorite, Chat } from 'grommet-icons';
 
 import styles from './styles.module.scss';
 
-const ArticleGridItem = ({ item, newspaper }) => {
+const ArticleGridItem = ({ item, newspaper, handleLikeClick }) => {
+  const onLikeButtonClick = () => {
+    handleLikeClick({
+      newspaperId: newspaper.id,
+      articleId: item.id
+    });
+  };
+
   return (
     <Box margin='small' className={styles.cardOuter}>
       <Box className={styles.card}>
@@ -49,11 +56,7 @@ const ArticleGridItem = ({ item, newspaper }) => {
           <Button
             plain
             gap='xsmall'
-            icon={
-              <Chat
-                className={styles.cardFooterButtonIcon}
-              />
-            }
+            icon={<Chat className={styles.cardFooterButtonIcon} />}
             label={`${item.commentCount}`}
             margin={{ right: '15px' }}
             className={`${styles.cardFooterButton} ${styles.commentButton}`}
@@ -63,6 +66,7 @@ const ArticleGridItem = ({ item, newspaper }) => {
             gap='xsmall'
             icon={<Favorite className={styles.cardFooterButtonIcon} />}
             label={`${item.likeCount}`}
+            onClick={onLikeButtonClick}
             className={`${styles.cardFooterButton} ${styles.likeButton}`}
           />
         </Box>

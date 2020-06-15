@@ -10,13 +10,17 @@ import { IGlobalState } from 'models/global-state';
 import { IBindingCallback1 } from 'models/callback';
 
 import { getArticlesState } from '../../selectors';
-import { fetchNewspaperArticles } from '../../routines';
+import {
+  fetchNewspaperArticles,
+  handleUserArticleReaction
+} from '../../routines';
 
 import styles from './styles.module.scss';
 
 // TODO fix ts types
 export interface IArticlesGridProps {
   fetchNewspaperArticles: IBindingCallback1<{ newspaperId: string }>;
+  handleUserArticleReaction: any;
   loading: boolean;
   error: object | string | null;
   articles: any;
@@ -39,6 +43,17 @@ class ArticlesGridView extends React.Component<
     fetchNewspaperArticles({ newspaperId: user.newspapers[0].id });
   }
 
+  @boundMethod
+  handleLikeClick({ newspaperId, articleId }) {
+    const { handleUserArticleReaction, user } = this.props;
+
+    handleUserArticleReaction({
+      newspaperId,
+      articleId,
+      userId: user.id
+    });
+  }
+
   render() {
     const { loading, articles, user } = this.props;
 
@@ -55,6 +70,7 @@ class ArticlesGridView extends React.Component<
                 item={item}
                 key={item.id}
                 newspaper={user.newspapers[0]}
+                handleLikeClick={this.handleLikeClick}
               />
             ))}
           </Box>
@@ -81,7 +97,8 @@ const mapStateToProps = (state: IGlobalState) => {
 };
 
 const mapDispatchToProps = {
-  fetchNewspaperArticles
+  fetchNewspaperArticles,
+  handleUserArticleReaction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlesGridView);
