@@ -29,3 +29,8 @@ Content-Type: application/json
 
 GET http://localhost:3001/api/newspapers/a785c819-8494-42c4-bc03-ce2f0477d4a9/articles/4cb2f551-b01c-45c2-b4be-62f1b32aa93c
 Content-Type: application/json
+
+###
+
+DELETE http://localhost:3001/api/articles/88077315-f980-4909-984a-aaf90e0f01ae
+Content-Type: application/json

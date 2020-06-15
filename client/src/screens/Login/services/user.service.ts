@@ -11,6 +11,7 @@ export const getUserDetails = async () => {
     const processedResponse = await handleResponse(response);
     return processedResponse;
   } catch (error) {
-    return null;
+    // TODO handle error response properly
+    return Promise.reject(error);
   }
 };

@@ -1,5 +1,6 @@
-import { IRequestState } from 'models/request';
 import { Routine } from 'redux-saga-routines';
+
+import { IRequestState } from 'models/request';
 
 const extractAllActionDomains = (actionTypes: string[]): string[] =>
   actionTypes.map(type => type.split('/').shift());

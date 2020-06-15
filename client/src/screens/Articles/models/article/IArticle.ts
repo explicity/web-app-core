@@ -2,17 +2,21 @@ import { GenreEnum } from '../../enums';
 
 import { IUser } from '../user';
 import { IAnnotation } from '../annotation';
-// TODO fix client models due to db changes
+import { ITag } from '../tag';
+import { IArticleReaction } from '../article-reaction';
+import { IComment } from '../comment';
+
 export interface IArticle {
   id?: string;
   title: string;
   subtitle?: string;
-  body: string;
+  content: string;
   publicationDate: Date;
   genre: GenreEnum;
   imageLink?: string;
-  author: IUser;
+  authors: IUser[];
   annotation: IAnnotation;
-  // tags?: ITag[];
-  // articleReaction?: IArticleReaction[];
+  tags?: ITag[];
+  articleReaction?: IArticleReaction[];
+  comments?: IComment[];
 }

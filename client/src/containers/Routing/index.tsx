@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
-import ArticlesMenu from 'screens/ArticlesMenu';
 import LoginPage from 'screens/Login/containers/LoginPage';
 import RegisterPage from 'screens/Login/containers/RegisterPage';
+import ArticlesMenu from 'screens/ArticlesMenu';
+import ArticleView from 'screens/Articles/containers/ArticleView';
 
 import LoaderWrapper from 'components/LoaderWrapper';
 import PrivateRoute from 'components/PrivateRoute';
-import { authService } from '../../screens/Login/services/auth.service';
 import { Role } from 'screens/Login/models/role';
 import { IBindingAction } from 'models/callback';
 import { IGlobalState } from 'models/global-state';
@@ -38,11 +38,9 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
     <RegisterPage {...regProps} isAuthorized={isAuthorized} />
   );
 
-  const { tokenValue }: { tokenValue: string } = authService;
-
   return (
     <Switch>
-      <LoaderWrapper loading={isLoading || (tokenValue && !isAuthorized)}>
+      <LoaderWrapper loading={isLoading}>
         <Switch>
           <Route exact path='/login' component={renderLogin} />
           <Route exact path='/register' component={renderRegistration} />
@@ -51,6 +49,12 @@ const Routing: React.FunctionComponent<IRoutingProps> = ({
             path='/'
             roles={[Role.User, Role.Admin]}
             component={ArticlesMenu}
+          />
+          <PrivateRoute
+            exact
+            path='/newspapers/:newspaperId/articles/:articleId'
+            roles={[Role.User, Role.Admin]}
+            component={ArticleView}
           />
         </Switch>
       </LoaderWrapper>

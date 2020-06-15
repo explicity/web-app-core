@@ -1,0 +1,110 @@
+:local(.cardOuter) {
+	display: flex;
+  justify-content: center;
+	align-items: center;
+  position: relative;
+  width: 300px;
+	height: 300px;
+}
+
+:local(.card) {
+  width: 300px;
+	height: 275px;
+	background-color: #383838;
+	border-radius: 5px;  
+	position: relative;
+	text-decoration: none;
+	transition: 0.3s ease;
+  outline: none;
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid transparent; 
+
+  &:hover {
+    background-color: #585858;
+  }
+}
+
+:local(.cardImageOuter) {
+  width: 300px;
+	height: 150px;
+	background-color: #db9200;
+	border-radius: 5px 5px 0 0;
+	overflow: hidden;
+}
+
+:local(.cardImage) {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s ease;
+}
+
+:local(.cardGenreOuter) {
+  position: absolute;
+  padding: 3px 10px;
+	background-color: #00739D;
+	border-radius: 4px;
+	top: 15px;
+	left: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+:local(.cardGenre) {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: hsla(0, 0%, 100%, 0.87);
+  letter-spacing: 0.4px;
+}
+
+:local(.cardTitle) {
+  font-size: 25px !important;
+  color: hsla(0, 0%, 100%, 0.87);
+  font-family: 'Roboto', sans-serif;
+}
+
+:local(.cardBody) {
+  padding: 15px 20px;
+}
+
+:local(.cardFooter) {
+  padding: 15px 20px;
+}
+
+:local(.cardFooterButton) {
+  font-size: 17px !important;
+  color: hsla(0, 0%, 100%, 0.5) !important;
+  transition: 0.3s ease;
+}
+
+:local(.cardFooterButtonIcon) {
+  width: 18px !important;
+  height: 18px !important;
+  fill: hsla(0, 0%, 100%, 0.5) !important;
+  stroke: hsla(0, 0%, 100%, 0.5) !important;
+  transition: 0.3s ease;  
+}
+
+:local(.commentButton) {
+  &:hover {
+    color: #4690D4 !important;
+
+    :local(.cardFooterButtonIcon) {
+      fill: #4690D4 !important;
+      stroke: #4690D4 !important;
+    }
+  }
+}
+
+:local(.likeButton) {
+  &:hover {
+    color: #EA4C89 !important;
+
+    :local(.cardFooterButtonIcon) {
+      fill: #EA4C89 !important;
+      stroke: #EA4C89 !important;
+    }
+  }
+}

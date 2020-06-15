@@ -1,29 +1,37 @@
+import { AnyAction } from 'redux';
 import { takeEvery, put, call, all } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 
 import * as schema from './shema';
-import * as articleService from '../../services/article.service';
+import * as newspaperService from '../../services/newspaper.service';
 
-import { fetchArticles } from '../../routines';
+import { fetchNewspaperArticles } from '../../routines';
 
-function* fetchArticlesRequest() {
+function* fetchNewspaperArticlesRequest({ payload }: AnyAction) {
   try {
-    const response = yield call(articleService.getArticles);
+    const { newspaperId } = payload;
+    const response = yield call(newspaperService.getNewspaperArticles, {
+      newspaperId
+    });
 
     yield put(
-      fetchArticles.success({
-        response: normalize(response, schema.arrayOfArticles)
+      fetchNewspaperArticles.success({
+        response: normalize(response.articles, schema.arrayOfArticles)
       })
     );
   } catch (error) {
-    yield put(fetchArticles.failure(error.message || 'Something went wrong!'));
+    yield put(
+      fetchNewspaperArticles.failure(error.message || 'Something went wrong! Please try again.')
+    );
   }
 }
-
-function* watchFetchArticlesRequest() {
-  yield takeEvery(fetchArticles.TRIGGER, fetchArticlesRequest);
+function* watchFetchNewspaperArticlesRequest() {
+  yield takeEvery(
+    fetchNewspaperArticles.TRIGGER,
+    fetchNewspaperArticlesRequest
+  );
 }
 
 export default function* articleSagas() {
-  yield all([watchFetchArticlesRequest()]);
+  yield all([watchFetchNewspaperArticlesRequest()]);
 }
