@@ -3,12 +3,18 @@ import { Service } from 'typedi';
 import { OrmRepository } from 'typeorm-typedi-extensions';
 
 import ArticleRepository from '../data/repositories/article.repository';
+import ArticleReactionRepository from '../data/repositories/article-reaction.repository';
+
 import Article from '../data/entities/Article';
 import { IArticleNew } from '../common/models/article';
 
 @Service()
 export default class ArticleService {
-  constructor(@OrmRepository() private articleRepository: ArticleRepository) {}
+  constructor(
+    @OrmRepository() private articleRepository: ArticleRepository,
+    @OrmRepository()
+    private articleReactionRepository: ArticleReactionRepository
+  ) {}
 
   public async getAll(): Promise<Article[]> {
     return await this.articleRepository.getAllArticles();
@@ -32,5 +38,17 @@ export default class ArticleService {
 
   public async deleteArticle(id: string) {
     return await this.articleRepository.deleteArticle(id);
+  }
+
+  public async handleUserArticleReaction({
+    newspaperId,
+    articleId,
+    userId,
+    isLiked
+  }: any) {
+    const reaction = await this.articleReactionRepository.getByUserIdAndArticleId(
+      { userId, articleId }
+    );
+    console.log('reaction', reaction, newspaperId, isLiked);
   }
 }

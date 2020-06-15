@@ -14,17 +14,25 @@ export default class ArticleReactionRepository extends BaseRepository<
     userId: string;
     articleId: string;
   }): Promise<ArticleReaction> {
-    return await this.createQueryBuilder('articleReactions')
-      .select([
-        'articleReaction.id as id',
-        'articleReaction.isLiked as "isLiked"'
-      ])
-      .leftJoin('articleReaction.article', 'article')
-      .leftJoin('articleReaction.user', 'user')
-      .where('user.id = :userId AND article.id = :articleId', {
-        userId,
-        articleId
-      })
-      .getRawOne();
+    // const articleReaction = await this.createQueryBuilder('articleReactions')
+    //   .select([
+    //     'articleReactions.id as id',
+    //     'articleReactions.isLiked as "isLiked"'
+    //   ])
+    //   .leftJoinAndSelect('articleReactions.articles', 'article')
+    //   .leftJoinAndSelect('articleReactions.users', 'user')
+    //   .where('user.id = :userId AND article.id = :articleId', {
+    //     userId,
+    //     articleId
+    //   })
+    //   .getRawOne();
+
+    const articleReaction = await this.findOne({
+      where: { userId, articleId }
+    });
+
+    console.log('articleReaction', articleReaction);
+
+    return articleReaction;
   }
 }

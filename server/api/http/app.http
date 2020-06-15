@@ -34,3 +34,10 @@ Content-Type: application/json
 
 DELETE http://localhost:3001/api/articles/88077315-f980-4909-984a-aaf90e0f01ae
 Content-Type: application/json
+
+###
+
+POST http://localhost:3001/api/newspapers/a785c819-8494-42c4-bc03-ce2f0477d4a9/articles/4cb2f551-b01c-45c2-b4be-62f1b32aa93c/react
+Content-Type: application/json
+
+{"newspaperId": "a785c819-8494-42c4-bc03-ce2f0477d4a9", "articleId": "4cb2f551-b01c-45c2-b4be-62f1b32aa93c", "userId": "a47cb008-55ae-4863-9465-02b4e2dc0105", "isLiked": "true"}

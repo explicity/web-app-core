@@ -1,13 +1,17 @@
-import { JsonController, Get, Param } from 'routing-controllers';
+import { JsonController, Get, Param, Post, Body } from 'routing-controllers';
 
 import NewspaperService from '../../services/newspaper.service';
+import ArticleService from '../../services/article.service';
 
 import Newspaper from '../../data/entities/Newspaper';
 import Article from '../../data/entities/Article';
 
 @JsonController('/newspapers')
 export class NewspaperController {
-  constructor(private newspaperService: NewspaperService) {}
+  constructor(
+    private newspaperService: NewspaperService,
+    private articleService: ArticleService
+  ) {}
 
   @Get('/')
   public async getAllNewspapers(): Promise<Newspaper[]> {
@@ -35,5 +39,10 @@ export class NewspaperController {
       newspaperId,
       articleId
     });
+  }
+
+  @Post('/:newspaperId/articles/:articleId/react')
+  public async handleUserArticleReaction(@Body() data: any) {
+    return await this.articleService.handleUserArticleReaction(data);
   }
 }
